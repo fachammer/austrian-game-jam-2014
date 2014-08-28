@@ -1,0 +1,12 @@
+# Unity
+Temp/
+Library/
+
+# Visual Studio
+obj/
+*.csproj
+*.sln
+*.suo
+
+# UnityVS
+*.DotSettings
