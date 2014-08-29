@@ -5,6 +5,7 @@ TextureImporter:
     21300000: prototypeSprites
     21300002: prototypeSprites_0
     21300004: prototypeSprites_1
+    21300006: prototypeSprites_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,6 +58,16 @@ TextureImporter:
       pivot: {x: .5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: prototypeSprites_1
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 968
+        width: 51
+        height: 29
+      alignment: 9
+      pivot: {x: .155279115, y: .7621544}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototypeSprites_2
       rect:
         serializedVersion: 2
         x: 57
