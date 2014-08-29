@@ -25,19 +25,6 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-<<<<<<< HEAD
-    filterMode: 1
-    aniso: 1
-    mipBias: -1
-    wrapMode: 1
-  nPOTScale: 0
-  lightmap: 0
-  compressionQuality: 50
-  spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
-  alignment: 0
-=======
     filterMode: -1
     aniso: -1
     mipBias: -1
@@ -48,8 +35,7 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 6
->>>>>>> added door prefab
+  alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
@@ -57,50 +43,6 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-<<<<<<< HEAD
-    sprites:
-    - name: background_0
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 472
-        width: 179
-        height: 105
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: background_1
-      rect:
-        serializedVersion: 2
-        x: 895
-        y: 244
-        width: 209
-        height: 136
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: background_2
-      rect:
-        serializedVersion: 2
-        x: 1437
-        y: 243
-        width: 239
-        height: 720
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: background_3
-      rect:
-        serializedVersion: 2
-        x: 547
-        y: 292
-        width: 366
-        height: 625
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-=======
     sprites: []
->>>>>>> added door prefab
   spritePackingTag: 
   userData: 
