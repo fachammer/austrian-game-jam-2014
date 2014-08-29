@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AI : MonoBehaviour {
 
+	public Transform target;
+
 	void Start () {
 	
 	}
