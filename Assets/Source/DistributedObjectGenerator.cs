@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DoorGenerator : MonoBehaviour
+public class DistributedObjectGenerator : MonoBehaviour
 {
     public GameObject door;
     public int numberOfDoors;
