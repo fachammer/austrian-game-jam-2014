@@ -6,6 +6,7 @@ TextureImporter:
     21300002: prototypeSprites_0
     21300004: prototypeSprites_1
     21300006: prototypeSprites_2
+    21300008: prototypeSprites_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -76,6 +77,16 @@ TextureImporter:
         height: 52
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototypeSprites_3
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 923
+        width: 30
+        height: 23
+      alignment: 9
+      pivot: {x: .184696957, y: .405095637}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
