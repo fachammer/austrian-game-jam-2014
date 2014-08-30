@@ -35,7 +35,6 @@ public class Gun2D : MonoBehaviour
         audio.PlayOneShot(shoot);
 
         if (hit) {
-            Debug.Log(hit.collider.gameObject);
             if (hit.collider.gameObject.layer == 8) {
                 Instantiate(impact, hit.point, Quaternion.identity);
             }

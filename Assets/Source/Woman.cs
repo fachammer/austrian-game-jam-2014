@@ -9,35 +9,21 @@ public class Woman : MonoBehaviour
     public float evasionClearDistance;
     public float jumpCastLength = 1f;
 
+    public GameObject package;
+
     public AudioClip[] screams;
 
-    private bool hasShoes = false;
+    private bool hasAttacked = false;
     private int moveDir = 0;
     private bool jump = false;
     private bool evasionJump = false;
     private float timeTillRndJump;
 
     private float timeSinceJump = 0;
+    private Collider2D colliders;
 
     //private GameObject player;
-    private PlayerController player;
-
-    public void ThrowAway() {
-        // Debug.Log("throw away");
-        rigidbody2D.fixedAngle = false;
-        GetComponent<BoxCollider2D>().enabled = false;
-        if (moveDir >= 0) {
-            rigidbody2D.AddForce(new Vector2(Random.Range(-500, -1000), Random.Range(2000, 5000)));
-        }
-        else {
-            rigidbody2D.AddForce(new Vector2(Random.Range(500, 1000), Random.Range(1500, 4000)));
-        }
-        rigidbody2D.AddTorque(50);
-        DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed>();
-        dtt.time = 5;
-        GetComponent<Health>().enabled = false;
-        this.enabled = false;
-    }
+    PlayerController player;
 
     private void Awake() {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -50,22 +36,23 @@ public class Woman : MonoBehaviour
         GetComponent<Health>().OnDeath += new Health.HealthHandler(Woman_OnDeath);
     }
 
-    private void Woman_OnDeath() {
+    void Woman_OnDeath() {
         Scream();
         BloodEffects.Instance.Stimulate();
     }
 
-    // Use this for initialization
-    private void Start() {
+    private void Start() { 
         timeTillRndJump = Random.Range(0.5f, 3.0f);
     }
 
-    // Update is called once per frame
-    private void Update() {
-        if (!hasShoes) {
+    private void Update()
+    {
+        if (!hasAttacked)
+        {
             Attack();
         }
-        else {
+        else
+        {
             Escape();
         }
 
@@ -75,43 +62,76 @@ public class Woman : MonoBehaviour
         CheckDispose();
     }
 
-    private void CheckDispose() {
-        if (transform.position.x < player.transform.position.x) {
-            float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
-
-            if (sqrDist >= 100) {
-                Destroy(gameObject);
-            }
-        }
-    }
-
-    private void Attack() {
-        // Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    private void Attack()
+    {
         Vector3 targetPos = player.transform.position;
-        if (targetPos.x < transform.position.x) {
+        if (targetPos.x < transform.position.x)
+        {
             moveDir = -1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-        else {
-            moveDir = 1;
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        TryGrabShoes();
+        else
+        {
+            moveDir = 1;
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        TryHitPlayer();
     }
 
-    private void Escape() {
-        moveDir = -1;
-    }
-
-    private void TryGrabShoes() {
-        if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance) {
+    private void TryHitPlayer()
+    {
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance &&
+            Mathf.Abs(player.transform.position.y - transform.position.y) <= grabDistance)
+        {
             if (player.isRolling) {
                 ThrowAway();
             }
             else {
-                hasShoes = true;
+                hasAttacked = true;
                 player.GetComponent<PlayerBehaviour>().Hit();
-                //Debug.Log("Shoes grabbed!");
+                TakePackage();
+            }
+        }
+    }
+    public void ThrowAway()
+    {
+        rigidbody2D.fixedAngle = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        if (moveDir >= 0)
+        {
+            rigidbody2D.AddForce(new Vector2(Random.Range(-500, -1000), Random.Range(2000, 5000)));
+        }
+        else
+        {
+            rigidbody2D.AddForce(new Vector2(Random.Range(500, 1000), Random.Range(1500, 4000)));
+        }
+        rigidbody2D.AddTorque(50);
+        DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed>();
+        dtt.time = 5;
+        GetComponent<Health>().enabled = false;
+        this.enabled = false;
+    }
+
+    private void TakePackage()
+    {
+        GameObject pkg = (GameObject)Instantiate(package, transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+        pkg.GetComponentInParent<Package>().target = gameObject;
+    }
+
+    private void Escape()
+    {
+        moveDir = -1;
+        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+    }
+    private void CheckDispose()
+    {
+        if (transform.position.x < player.transform.position.x)
+        {
+            float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
+
+            if (sqrDist >= 250000)
+            {
+                Destroy(gameObject);
             }
         }
     }
@@ -181,7 +201,7 @@ public class Woman : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z * 0.9f);
     }
 
-    private void Scream() {
+    void Scream() {
         //audio.clip = screams[Random.Range(0, screams.Length - 1)];
         //audio.Play();
         AudioSource.PlayClipAtPoint(screams[Random.Range(0, screams.Length - 1)], transform.position);

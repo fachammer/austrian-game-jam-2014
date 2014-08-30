@@ -50,7 +50,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     public void Hit()
     {
-        losePackage();
+        //losePackage();
         health.TakeDamage(1);
 
         //if (health.CurrentHealth <= 0)
