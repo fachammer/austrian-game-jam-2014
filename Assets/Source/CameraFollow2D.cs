@@ -8,7 +8,7 @@ public class CameraFollow2D : MonoBehaviour
 	void FixedUpdate ()
 	{
 
-        transform.position = target.transform.position + new Vector3(0.0f, 4.0f, -20.0f);
+        transform.position = target.transform.position + new Vector3(0.0f, 2.0f, -20.0f);
 	}
 
 }
