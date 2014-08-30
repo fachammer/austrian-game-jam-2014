@@ -17,7 +17,7 @@ public class OptionsUI : MonoBehaviour {
 	void Update () {
 	
 		if (useGamepad != useGamepadToggle.isOn) {
-			useGamepad = useGamepadToggle;
+			useGamepad = useGamepadToggle.isOn;
 			PlayerPrefs.SetInt("useGamepad", useGamepad ? 1 : 0);
 		}
 

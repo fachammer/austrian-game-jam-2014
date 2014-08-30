@@ -42,7 +42,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 50
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
@@ -61,12 +61,12 @@ TextureImporter:
     - name: prototypeSprites_1
       rect:
         serializedVersion: 2
-        x: 115
-        y: 968
-        width: 51
-        height: 29
+        x: 85
+        y: 953
+        width: 55
+        height: 28
       alignment: 9
-      pivot: {x: .155279115, y: .7621544}
+      pivot: {x: .130704701, y: .770200431}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: prototypeSprites_2
       rect:
