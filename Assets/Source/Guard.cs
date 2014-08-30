@@ -9,7 +9,9 @@ public class Guard : MonoBehaviour {
     public float evasionClearDistance;
     public float jumpCastLength = 1f;
     public bool doRandomJumps = true;
+    public float attackCooldown = 2f;
 
+    float timeTillAttack = 0f;
     int moveDir = 0;
     bool jump = false;
     bool evasionJump = false;
@@ -18,13 +20,18 @@ public class Guard : MonoBehaviour {
 
     float spawnX;
     public float maxDistToSpawn = 4;
+
+
     
 
-    GameObject player;
+    PlayerController player;
+    CircleCollider2D playerColl;
+    CircleCollider2D coll;
 
     void Awake() {
-        player = GameObject.Find("Player");
-        
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerColl = player.GetComponent<CircleCollider2D>();
+        coll = GetComponent<CircleCollider2D>();
 
         Collider2D[] playerColls = player.GetComponents<Collider2D>();
         foreach (Collider2D c in playerColls) {
@@ -38,17 +45,32 @@ public class Guard : MonoBehaviour {
 	void Start () {
         timeTillRndJump = Random.Range(0.5f, 3.0f);
         spawnX = transform.position.x;
-        moveDir = -1;
+        moveDir = 1;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Move();
 
+        CheckPlayerColl();
         timeSinceJump += Time.deltaTime;
         HandleObstacles();
         DoEvasionStuff();
 	}
+
+    void CheckPlayerColl() {
+        if (timeTillAttack <= 0) {
+            float dist = (transform.position - player.transform.position).magnitude;
+            if (dist <= playerColl.radius + coll.radius) {
+
+                player.GetComponent<Health>().TakeDamage(1);
+                timeTillAttack = attackCooldown;
+            }
+        }
+        else {
+            timeTillAttack -= Time.deltaTime;
+        }
+    }
 
     void Move() {
         // move from left to right 
@@ -136,11 +158,5 @@ public class Guard : MonoBehaviour {
 
         // saltos, bitch!
         //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z * 0.9f);
-    }
-
-    void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject == player) {
-            Debug.Log("hit player");
-        }
     }
 }

@@ -19,10 +19,11 @@ public class Woman : MonoBehaviour
 
     private float timeSinceJump = 0;
 
-    private GameObject player;
+    //private GameObject player;
+    PlayerController player;
 
     private void Awake() {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
 
         Collider2D[] playerColls = player.GetComponents<Collider2D>();
         foreach (Collider2D c in playerColls) {
@@ -81,18 +82,38 @@ public class Woman : MonoBehaviour
         TryGrabShoes();
     }
 
+    public void ThrowAway() {
+//        Debug.Log("throw away");
+		rigidbody2D.fixedAngle = false;
+		GetComponent<BoxCollider2D> ().enabled = false;
+		if (moveDir >= 0) {
+			rigidbody2D.AddForce (new Vector2(Random.Range (-500, -1000),Random.Range(2000,5000)));
+		} else {
+			rigidbody2D.AddForce (new Vector2(Random.Range (500, 1000),Random.Range(1500,4000)));
+		}
+		rigidbody2D.AddTorque (50);
+		DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed> ();
+		dtt.time = 5;
+		GetComponent<Health> ().enabled = false;
+		this.enabled = false;
+    }
+
     private void Escape() {
         moveDir = -1;
     }
 
     private void TryGrabShoes() {
-        //float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
-        //if (sqrDist <= grabDistance * grabDistance) {
-        if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance) {
-            hasShoes = true;
-            player.GetComponent<PlayerBehaviour>().Hit();
-            //Debug.Log("Shoes grabbed!");
-        }
+
+            if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance) {
+                if (player.isRolling) {
+                    ThrowAway();
+                }
+                else {
+                    hasShoes = true;
+                    player.GetComponent<PlayerBehaviour>().Hit();
+                    //Debug.Log("Shoes grabbed!");
+                }
+            }
     }
 
     private void HandleObstacles() {
