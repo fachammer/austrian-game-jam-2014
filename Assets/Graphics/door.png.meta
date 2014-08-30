@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6f357c9611f731640953da594948d5b8
+guid: 3e9e9bb39b65d5e4fa7c7393084523e1
 TextureImporter:
   fileIDToRecycleName:
     21300000: door
@@ -35,7 +35,7 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 6
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
