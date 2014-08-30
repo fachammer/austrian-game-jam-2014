@@ -22,12 +22,16 @@ public class PlayerController : MonoBehaviour
 
     CircleCollider2D collCircle;
     BoxCollider2D collBox;
+    GameObject gun;
+
+    public bool isRolling = false;
 
     private void Awake() {
         groundCheck = transform.Find("GroundCheck");
 
         collCircle = GetComponent<CircleCollider2D>();
         collBox = GetComponent<BoxCollider2D>();
+        gun = transform.FindChild("Gun").gameObject;
     }
 
     private void Update() {
@@ -48,18 +52,22 @@ public class PlayerController : MonoBehaviour
         if (rollKeyDown != rollKeyPrev) {
             if (rollKeyDown) {
                 // roll
+                isRolling = true;
                 collCircle.enabled = true;
                 collBox.enabled = false;
                 rigidbody2D.fixedAngle = false;
                 rigidbody2D.gravityScale = 6f;
+
             }
             else {
                 // dont roll
+                isRolling = false;
                 collCircle.enabled = false;
                 collBox.enabled = true;
                 rigidbody2D.fixedAngle = true;
                 rigidbody2D.gravityScale = 12f;
                 transform.rotation = Quaternion.identity;
+                gun.transform.rotation = Quaternion.identity;
             }
         }
     }
