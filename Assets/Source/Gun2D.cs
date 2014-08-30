@@ -22,7 +22,7 @@ public class Gun2D : MonoBehaviour {
 
 	void Start () {
 	
-		useGamepad = PlayerPrefs.GetInt ("useGamepad", 0) > 0 ? true : false;
+		useGamepad = PlayerPrefs.GetInt ("useGamepad", 0) != 0 ? true : false;
 
 	}
 
@@ -53,7 +53,7 @@ public class Gun2D : MonoBehaviour {
 			ammo += 3;
 		}
 
-		debugDisplay.text = "GamepadInput: "+Input.GetAxis("GamepadX")+" "+Input.GetAxis("GamepadY");
+//		debugDisplay.text = "GamepadInput: "+Input.GetAxis("GamepadX")+" "+Input.GetAxis("GamepadY");
 
 		float angle, xAxis, yAxis;
 
@@ -70,15 +70,19 @@ public class Gun2D : MonoBehaviour {
 			yAxis = -yAxis;
 		}
 
-		angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg +90;
+		if (useGamepad) {
+			angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg +90;
+		} else {
+			angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg -90;
+		}
 
-		if (angle > minRotation-90 && angle < maxRotation-90) {
+//		if (angle > minRotation-90 && angle < maxRotation-90) {
 			if (playerController.facingRight) {
 				transform.localEulerAngles = new Vector3(0,0,-angle);
 			} else {
 				transform.localEulerAngles = new Vector3(0,0,angle);
 			}
-		}
+//		}
 
 		if (Input.GetMouseButton (0)) {
 			TryFire ();
