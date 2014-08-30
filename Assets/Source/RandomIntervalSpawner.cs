@@ -38,7 +38,7 @@ public class RandomIntervalSpawner : MonoBehaviour
 
     void Open() {
         GetComponent<SpriteRenderer>().sprite = spriteOpened;
-        audio.PlayOneShot(sfxOpen);
+        //audio.PlayOneShot(sfxOpen);
         isClosed = false;
     }
 }

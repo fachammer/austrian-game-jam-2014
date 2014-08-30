@@ -3,8 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10f;
-
     // Movement Settings
     public float moveForce = 365f;
 
@@ -22,8 +20,14 @@ public class PlayerController : MonoBehaviour
 
     bool rollKeyDown = false;
 
+    CircleCollider2D collCircle;
+    BoxCollider2D collBox;
+
     private void Awake() {
         groundCheck = transform.Find("GroundCheck");
+
+        collCircle = GetComponent<CircleCollider2D>();
+        collBox = GetComponent<BoxCollider2D>();
     }
 
     private void Update() {
@@ -33,6 +37,7 @@ public class PlayerController : MonoBehaviour
             jump = true;
         }
 
+        bool rollKeyPrev = rollKeyDown;
         if (Input.GetButtonDown("Roll") || Input.GetKeyDown(KeyCode.LeftShift)) {
             rollKeyDown = true;
         }
@@ -40,15 +45,22 @@ public class PlayerController : MonoBehaviour
             rollKeyDown = false;
         }
 
-
-        if (rollKeyDown) {
-            Debug.Log("rolll");
-            GetComponent<CircleCollider2D>().enabled = true;
-            GetComponent<BoxCollider2D>().enabled = false;
-        }
-        else {
-            GetComponent<CircleCollider2D>().enabled = false;
-            GetComponent<BoxCollider2D>().enabled = true;
+        if (rollKeyDown != rollKeyPrev) {
+            if (rollKeyDown) {
+                // roll
+                collCircle.enabled = true;
+                collBox.enabled = false;
+                rigidbody2D.fixedAngle = false;
+                rigidbody2D.gravityScale = 6f;
+            }
+            else {
+                // dont roll
+                collCircle.enabled = false;
+                collBox.enabled = true;
+                rigidbody2D.fixedAngle = true;
+                rigidbody2D.gravityScale = 12f;
+                transform.rotation = Quaternion.identity;
+            }
         }
     }
 

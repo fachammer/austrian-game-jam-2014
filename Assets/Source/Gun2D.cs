@@ -28,7 +28,8 @@ public class Gun2D : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(shootPoint.position.x, shootPoint.position.y), new Vector2(shootPoint.right.x, shootPoint.right.y), 100f,
             LayerMask.GetMask("Obstacle", "Enemy", "Ground"));
-        Debug.DrawLine(new Vector2(shootPoint.position.x, shootPoint.position.y), hit.point);
+        Vector2 shootPoint2D = new Vector2(shootPoint.position.x, shootPoint.position.y);
+        Debug.DrawLine(shootPoint2D, shootPoint2D + new Vector2(shootPoint.right.x, shootPoint.right.y) * 20);
 
         GetComponent<Animator>().SetTrigger("shoot");
         audio.PlayOneShot(shoot);
