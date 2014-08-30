@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
                 collCircle.enabled = false;
                 collBox.enabled = true;
                 rigidbody2D.fixedAngle = true;
-                rigidbody2D.gravityScale = 12f;
+                rigidbody2D.gravityScale = 4f;
                 transform.rotation = Quaternion.identity;
                 gun.transform.rotation = Quaternion.identity;
                 maxSpeed = maxSpeedWalking;
