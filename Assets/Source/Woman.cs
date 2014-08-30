@@ -83,7 +83,19 @@ public class Woman : MonoBehaviour
     }
 
     public void ThrowAway() {
-        Debug.Log("throw away");
+//        Debug.Log("throw away");
+		rigidbody2D.fixedAngle = false;
+		GetComponent<BoxCollider2D> ().enabled = false;
+		if (moveDir >= 0) {
+			rigidbody2D.AddForce (new Vector2(Random.Range (-500, -1000),Random.Range(2000,5000)));
+		} else {
+			rigidbody2D.AddForce (new Vector2(Random.Range (500, 1000),Random.Range(1500,4000)));
+		}
+		rigidbody2D.AddTorque (50);
+		DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed> ();
+		dtt.time = 5;
+		GetComponent<Health> ().enabled = false;
+		this.enabled = false;
     }
 
     private void Escape() {
