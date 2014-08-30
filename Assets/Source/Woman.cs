@@ -20,7 +20,24 @@ public class Woman : MonoBehaviour
     private float timeSinceJump = 0;
 
     //private GameObject player;
-    PlayerController player;
+    private PlayerController player;
+
+    public void ThrowAway() {
+        // Debug.Log("throw away");
+        rigidbody2D.fixedAngle = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        if (moveDir >= 0) {
+            rigidbody2D.AddForce(new Vector2(Random.Range(-500, -1000), Random.Range(2000, 5000)));
+        }
+        else {
+            rigidbody2D.AddForce(new Vector2(Random.Range(500, 1000), Random.Range(1500, 4000)));
+        }
+        rigidbody2D.AddTorque(50);
+        DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed>();
+        dtt.time = 5;
+        GetComponent<Health>().enabled = false;
+        this.enabled = false;
+    }
 
     private void Awake() {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -33,13 +50,13 @@ public class Woman : MonoBehaviour
         GetComponent<Health>().OnDeath += new Health.HealthHandler(Woman_OnDeath);
     }
 
-    void Woman_OnDeath() {
+    private void Woman_OnDeath() {
         Scream();
         BloodEffects.Instance.Stimulate();
     }
 
     // Use this for initialization
-    private void Start() { 
+    private void Start() {
         timeTillRndJump = Random.Range(0.5f, 3.0f);
     }
 
@@ -73,29 +90,13 @@ public class Woman : MonoBehaviour
         Vector3 targetPos = player.transform.position;
         if (targetPos.x < transform.position.x) {
             moveDir = -1;
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else {
             moveDir = 1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         TryGrabShoes();
-    }
-
-    public void ThrowAway() {
-//        Debug.Log("throw away");
-		rigidbody2D.fixedAngle = false;
-		GetComponent<BoxCollider2D> ().enabled = false;
-		if (moveDir >= 0) {
-			rigidbody2D.AddForce (new Vector2(Random.Range (-500, -1000),Random.Range(2000,5000)));
-		} else {
-			rigidbody2D.AddForce (new Vector2(Random.Range (500, 1000),Random.Range(1500,4000)));
-		}
-		rigidbody2D.AddTorque (50);
-		DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed> ();
-		dtt.time = 5;
-		GetComponent<Health> ().enabled = false;
-		this.enabled = false;
     }
 
     private void Escape() {
@@ -103,17 +104,16 @@ public class Woman : MonoBehaviour
     }
 
     private void TryGrabShoes() {
-
-            if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance) {
-                if (player.isRolling) {
-                    ThrowAway();
-                }
-                else {
-                    hasShoes = true;
-                    player.GetComponent<PlayerBehaviour>().Hit();
-                    //Debug.Log("Shoes grabbed!");
-                }
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance) {
+            if (player.isRolling) {
+                ThrowAway();
             }
+            else {
+                hasShoes = true;
+                player.GetComponent<PlayerBehaviour>().Hit();
+                //Debug.Log("Shoes grabbed!");
+            }
+        }
     }
 
     private void HandleObstacles() {
@@ -181,7 +181,7 @@ public class Woman : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z * 0.9f);
     }
 
-    void Scream() {
+    private void Scream() {
         //audio.clip = screams[Random.Range(0, screams.Length - 1)];
         //audio.Play();
         AudioSource.PlayClipAtPoint(screams[Random.Range(0, screams.Length - 1)], transform.position);
