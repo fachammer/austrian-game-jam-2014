@@ -83,7 +83,7 @@ public class Woman : MonoBehaviour
     }
 
     public void ThrowAway() {
-        Debug.Log("throw away");
+        //Debug.Log("throw away");
     }
 
     private void Escape() {
