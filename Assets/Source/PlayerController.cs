@@ -65,8 +65,8 @@ public class PlayerController : MonoBehaviour
             if (rollKeyDown) {
                 // roll
                 isRolling = true;
-                collCircle.enabled = true;
-                collBox.enabled = false;
+                //collCircle.enabled = true;
+                //collBox.enabled = false;
                 rigidbody2D.fixedAngle = false;
                 rigidbody2D.gravityScale = 6f;
                 maxSpeed = maxSpeedRolling;
@@ -75,8 +75,8 @@ public class PlayerController : MonoBehaviour
             else {
                 // dont roll
                 isRolling = false;
-                collCircle.enabled = false;
-                collBox.enabled = true;
+                //collCircle.enabled = false;
+                //collBox.enabled = true;
                 rigidbody2D.fixedAngle = true;
                 rigidbody2D.gravityScale = 4f;
                 transform.rotation = Quaternion.identity;
