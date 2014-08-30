@@ -1,73 +1,88 @@
 using UnityEngine;
-using System.Collections;
 
-[RequireComponent (typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour {
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerController : MonoBehaviour
+{
+    public float speed = 10f;
 
-	public float speed = 10f;
+    // Movement Settings
+    public float moveForce = 365f;
 
-	// Movement Settings
-	public float moveForce = 365f;
-	public float maxSpeed = 5f;	
-	public float jumpForce = 1000f;	
+    public float maxSpeed = 5f;
+    public float jumpForce = 1000f;
 
-	[HideInInspector]
-	public bool jump = false;
-	[HideInInspector]
-	public bool facingRight = false;
+    [HideInInspector]
+    public bool jump = false;
 
-	private Transform groundCheck;
-	private bool grounded = false;	
+    [HideInInspector]
+    public bool facingRight = false;
 
-	void Awake () {
-		groundCheck = transform.Find("GroundCheck");
-	}
+    private Transform groundCheck;
+    private bool grounded = false;
 
-	void Update () {
+    bool rollKeyDown = false;
 
-		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")); 
+    private void Awake() {
+        groundCheck = transform.Find("GroundCheck");
+    }
 
-		if (Input.GetButtonDown("Jump") && grounded) {
-			jump = true;
-		}
+    private void Update() {
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
-	}
+        if (Input.GetButtonDown("Jump") && grounded) {
+            jump = true;
+        }
 
-	void FixedUpdate () {
+        if (Input.GetButtonDown("Roll") || Input.GetKeyDown(KeyCode.LeftShift)) {
+            rollKeyDown = true;
+        }
+        if (Input.GetButtonUp("Roll") || Input.GetKeyUp(KeyCode.LeftShift)) {
+            rollKeyDown = false;
+        }
 
-		Vector2 velocity = rigidbody2D.velocity;
 
-		float horizontalInput = Input.GetAxis("Horizontal");
+        if (rollKeyDown) {
+            Debug.Log("rolll");
+            GetComponent<CircleCollider2D>().enabled = true;
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
+        else {
+            GetComponent<CircleCollider2D>().enabled = false;
+            GetComponent<BoxCollider2D>().enabled = true;
+        }
+    }
 
-		if (horizontalInput * rigidbody2D.velocity.x < maxSpeed) {
-			rigidbody2D.AddForce (Vector2.right * horizontalInput * moveForce);
-		}
+    private void FixedUpdate() {
+        Vector2 velocity = rigidbody2D.velocity;
 
-		if (Mathf.Abs (rigidbody2D.velocity.x) > maxSpeed) {
-			rigidbody2D.velocity = new Vector2 (Mathf.Sign (rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
-		}
+        float horizontalInput = Input.GetAxis("Horizontal");
 
-		if(horizontalInput > 0 && facingRight)
-			Flip();
-		else if(horizontalInput < 0 && !facingRight)
-			Flip();
+        if (horizontalInput * rigidbody2D.velocity.x < maxSpeed) {
+            rigidbody2D.AddForce(Vector2.right * horizontalInput * moveForce);
+        }
 
-		if (jump) {
-			rigidbody2D.AddForce(new Vector2(0f, jumpForce));
-			jump = false;
-		}
+        if (Mathf.Abs(rigidbody2D.velocity.x) > maxSpeed) {
+            rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
+        }
 
-	}
+        if (horizontalInput > 0 && facingRight)
+            Flip();
+        else if (horizontalInput < 0 && !facingRight)
+            Flip();
 
-	void Flip () {
-		facingRight = !facingRight;
+        if (jump) {
+            rigidbody2D.AddForce(new Vector2(0f, jumpForce));
+            jump = false;
+        }
 
-		Vector3 newScale = transform.localScale;
-		newScale.x *= -1;
-		transform.localScale = newScale;
-	}
+        GetComponent<Animator>().SetInteger("directionX", (int)rigidbody2D.velocity.x);
+    }
 
+    private void Flip() {
+        facingRight = !facingRight;
+
+        Vector3 newScale = transform.localScale;
+        newScale.x *= -1;
+        transform.localScale = newScale;
+    }
 }
-
-
-

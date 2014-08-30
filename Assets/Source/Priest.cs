@@ -48,7 +48,7 @@ public class Priest : MonoBehaviour {
     void FixedUpdate() {
         //rigidbody2D.AddForce(new Vector2(moveDir.x, moveDir.y) * floatSpeed);
         rigidbody2D.velocity = new Vector2(moveDir.x, moveDir.y) * floatSpeed;
-        Debug.Log(new Vector2(moveDir.x, moveDir.y) * floatSpeed);
+       // Debug.Log(new Vector2(moveDir.x, moveDir.y) * floatSpeed);
     }
 
     void OnDrawGizmos() {

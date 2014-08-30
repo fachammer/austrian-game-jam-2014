@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    public delegate void HealthHandler();
+    public event HealthHandler OnHit, OnDeath;
+
     public int initialHealth;
     public float remainTimeAfterDeath;
     public string healthAnimationParameter;
@@ -16,10 +19,13 @@ public class Health : MonoBehaviour
             CurrentHealth -= damage;
             bloodEffects.Stimulate();
 
+            if (OnHit != null) OnHit();
+
             animator.SetInteger(healthAnimationParameter, CurrentHealth);
-        }
-        else if (CurrentHealth <= 0) {
-            Destroy(gameObject, remainTimeAfterDeath);
+            if (CurrentHealth <= 0) {
+                if (OnDeath != null) OnDeath();
+                Destroy(gameObject, remainTimeAfterDeath);
+            }
         }
     }
 

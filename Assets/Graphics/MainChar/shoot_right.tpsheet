@@ -1,0 +1,22 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# Sprite sheet: Shoot_right.png (16384 x 16384)
+# $TexturePacker:SmartUpdate:54453e6dd3c77b9a0bf4a5e193660729:a4fc262f6d3a0ac49b8ae0ab576cf63b:8f0fed2aa777df10cb9c3b29283ff4cb$
+#
+
+shoot left0001;2;13502;2880;2880;0.5;0.5
+shoot left0002;2884;13502;2880;2880;0.5;0.5
+shoot left0003;5766;13502;2880;2880;0.5;0.5
+shoot left0004;8648;13502;2880;2880;0.5;0.5
+shoot left0005;11530;13502;2880;2880;0.5;0.5
+shoot left0006;2;10620;2880;2880;0.5;0.5
+shoot left0007;2884;10620;2880;2880;0.5;0.5
+shoot left0008;5766;10620;2880;2880;0.5;0.5
+shoot left0009;8648;10620;2880;2880;0.5;0.5
+shoot left0010;11530;10620;2880;2880;0.5;0.5
+shoot left0011;2;7738;2880;2880;0.5;0.5
+shoot left0012;2;13502;2880;2880;0.5;0.5

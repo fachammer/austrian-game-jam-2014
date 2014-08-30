@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: 2fa0865a94de762499241c8ea867ee38
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Shoot_right
+    21300002: Shoot_right_0
+    21300004: Shoot_right_1
+    21300006: Shoot_right_2
+    21300008: Shoot_right_3
+    21300010: Shoot_right_4
+    21300012: Shoot_right_5
+    21300014: Shoot_right_6
+    21300016: Shoot_right_7
+    21300018: Shoot_right_8
+    21300020: Shoot_right_9
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Shoot_right_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1328
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .12295863, y: .33920306}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_1
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 1328
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .117413923, y: .344747752}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_2
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 1328
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .117413841, y: .344747752}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_3
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 1328
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .122958712, y: .350292474}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_4
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 1328
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .106324598, y: .350292474}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 608
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .111869179, y: .350292474}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_6
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 608
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .111869216, y: .33920297}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_7
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 608
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .117413841, y: .33920297}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_8
+      rect:
+        serializedVersion: 2
+        x: 2164
+        y: 608
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .111869305, y: .344747752}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Shoot_right_9
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 608
+        width: 720
+        height: 720
+      alignment: 9
+      pivot: {x: .117414005, y: .333658248}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

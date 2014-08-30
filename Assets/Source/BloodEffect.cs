@@ -10,6 +10,7 @@ public class BloodEffect : MonoBehaviour
 
     public void Stimulate() {
         alphaFadeTimer = fadingDuration;
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
     }
 
     private void Start() {
@@ -18,10 +19,9 @@ public class BloodEffect : MonoBehaviour
 
     private void Update() {
         if (alphaFadeTimer > 0) {
-            Debug.Log(alphaFadeTimer);
             alphaFadeTimer -= Time.deltaTime;
             Color c = image.color;
-            c.a = alphaFadeTimer / fadingDuration;
+            c.a = alphaFadeTimer / fadingDuration - 0.0f;
             image.color = c;
         }
     }

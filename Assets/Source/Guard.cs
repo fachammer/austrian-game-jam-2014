@@ -137,4 +137,10 @@ public class Guard : MonoBehaviour {
         // saltos, bitch!
         //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z * 0.9f);
     }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject == player) {
+            Debug.Log("hit player");
+        }
+    }
 }

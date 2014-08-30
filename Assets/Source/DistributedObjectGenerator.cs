@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Transform))]
 public class DistributedObjectGenerator : MonoBehaviour
 {
     public GameObject door;
@@ -21,7 +22,8 @@ public class DistributedObjectGenerator : MonoBehaviour
 
     private void Start() {
         Vector2[] positions = new Vector2[numberOfDoors];
-        Vector2 basePosition = GetComponent<Rigidbody2D>().position;
+        Vector3 position = transform.position;
+        Vector2 basePosition = new Vector2(position.x, position.y);
         float baseDistance = corridorWidth / numberOfDoors;
 
         for (int i = 0; i < positions.Length; i++)
@@ -30,7 +32,7 @@ public class DistributedObjectGenerator : MonoBehaviour
         positions.Do(pos => {
             GameObject instance = (GameObject)Instantiate(door);
             instance.transform.parent = transform;
-            instance.GetComponent<Rigidbody2D>().position = pos;
+            instance.transform.position = pos;
         });
     }
 }

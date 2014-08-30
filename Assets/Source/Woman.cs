@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+using UnityEngine;
 
-public class Woman : MonoBehaviour {
-
+public class Woman : MonoBehaviour
+{
     public float moveForce;
     public float jumpStrength;
     public float grabDistance;
@@ -10,34 +9,41 @@ public class Woman : MonoBehaviour {
     public float evasionClearDistance;
     public float jumpCastLength = 1f;
 
-    bool hasShoes = false;
-    int moveDir = 0;
-    bool jump = false;
-    bool evasionJump = false;
-    float timeTillRndJump;
+    public AudioClip[] screams;
 
-    float timeSinceJump = 0;
-    
+    private bool hasShoes = false;
+    private int moveDir = 0;
+    private bool jump = false;
+    private bool evasionJump = false;
+    private float timeTillRndJump;
 
-    GameObject player;
+    private float timeSinceJump = 0;
 
-    void Awake() {
+    private GameObject player;
+
+    private void Awake() {
         player = GameObject.Find("Player");
-        
 
         Collider2D[] playerColls = player.GetComponents<Collider2D>();
         foreach (Collider2D c in playerColls) {
             Physics2D.IgnoreCollision(collider2D, c);
         }
+
+        GetComponent<Health>().OnDeath += new Health.HealthHandler(Woman_OnDeath);
     }
 
-	// Use this for initialization
-	void Start () {
+    void Woman_OnDeath() {
+        Scream();
+        BloodEffects.Instance.Stimulate();
+    }
+
+    // Use this for initialization
+    private void Start() { 
         timeTillRndJump = Random.Range(0.5f, 3.0f);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    private void Update() {
         if (!hasShoes) {
             Attack();
         }
@@ -49,9 +55,9 @@ public class Woman : MonoBehaviour {
         HandleObstacles();
         DoEvasionStuff();
         CheckDispose();
-	}
+    }
 
-    void CheckDispose() {
+    private void CheckDispose() {
         if (transform.position.x < player.transform.position.x) {
             float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
 
@@ -60,9 +66,10 @@ public class Woman : MonoBehaviour {
             }
         }
     }
-    void Attack() {
-        Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+    private void Attack() {
+        // Vector3 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 targetPos = player.transform.position;
         if (targetPos.x < transform.position.x) {
             moveDir = -1;
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -74,26 +81,25 @@ public class Woman : MonoBehaviour {
         TryGrabShoes();
     }
 
-    void Escape() {
+    private void Escape() {
         moveDir = -1;
     }
 
-    void TryGrabShoes() {
-
+    private void TryGrabShoes() {
         //float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
         //if (sqrDist <= grabDistance * grabDistance) {
-        if(Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance){
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance) {
             hasShoes = true;
-            Debug.Log("Shoes grabbed!");
+            player.GetComponent<PlayerBehaviour>().Hit();
+            //Debug.Log("Shoes grabbed!");
         }
     }
 
-    void HandleObstacles() {
+    private void HandleObstacles() {
         Debug.DrawLine(transform.position, transform.position + new Vector3(moveDir * jumpCastLength, 0), Color.red);
         RaycastHit2D r = Physics2D.Raycast(transform.position, new Vector2(moveDir, 0), jumpCastLength, LayerMask.GetMask("Obstacle"));
 
         if (r.collider != null) {
-
             if (timeSinceJump >= 0.3f) {
                 jump = true;
                 timeSinceJump = 0;
@@ -104,10 +110,10 @@ public class Woman : MonoBehaviour {
         }
     }
 
-    void DoEvasionStuff() {
-        // do random jumps but only when no obstacle is ahead (to avoid jumping on obstacle or just before it later)
+    private void DoEvasionStuff() {
+        // do random jumps but only when no obstacle is ahead (to avoid jumping on obstacle or just
+        // before it later)
         if (timeSinceJump >= jumpCooldown) {
-
             timeTillRndJump -= Time.deltaTime;
 
             if (timeTillRndJump <= 0) {
@@ -126,15 +132,15 @@ public class Woman : MonoBehaviour {
         }
     }
 
-    void OnDrawGizmos() {
+    private void OnDrawGizmos() {
         Gizmos.DrawWireSphere(transform.position, grabDistance);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position - new Vector3(0, 0.2f, 0), 
+        Gizmos.DrawLine(transform.position - new Vector3(0, 0.2f, 0),
             transform.position - new Vector3(0, 0.2f, 0) + new Vector3(moveDir * evasionClearDistance, 0, 0));
     }
 
-    void FixedUpdate() {
+    private void FixedUpdate() {
         if (moveDir != 0) {
             //rigidbody2D.AddForce(new Vector2(moveForce * moveDir, 0));
             rigidbody2D.velocity = new Vector2(moveForce * moveDir, rigidbody2D.velocity.y);
@@ -152,5 +158,11 @@ public class Woman : MonoBehaviour {
 
         // saltos, bitch!
         transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z * 0.9f);
+    }
+
+    void Scream() {
+        //audio.clip = screams[Random.Range(0, screams.Length - 1)];
+        //audio.Play();
+        AudioSource.PlayClipAtPoint(screams[Random.Range(0, screams.Length - 1)], transform.position);
     }
 }

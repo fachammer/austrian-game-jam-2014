@@ -6,6 +6,10 @@ public class RandomIntervalSpawner : MonoBehaviour
     public float minSpawnInterval;
     public float maxSpawnInterval;
 
+    public Sprite spriteOpened;
+    public AudioClip sfxOpen;
+    bool isClosed = true;
+
     private float currentInterval;
     private float timer;
 
@@ -24,6 +28,17 @@ public class RandomIntervalSpawner : MonoBehaviour
             timer = 0f;
             currentInterval = CalculateNewInterval(minSpawnInterval, maxSpawnInterval);
             Instantiate(objectToSpawn, transform.position, transform.rotation);
+
+            if (isClosed) {
+                Open();
+            }
+
         }
+    }
+
+    void Open() {
+        GetComponent<SpriteRenderer>().sprite = spriteOpened;
+        audio.PlayOneShot(sfxOpen);
+        isClosed = false;
     }
 }
