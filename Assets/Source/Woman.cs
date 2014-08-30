@@ -68,12 +68,12 @@ public class Woman : MonoBehaviour
         if (targetPos.x < transform.position.x)
         {
             moveDir = -1;
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         else
         {
             moveDir = 1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
         TryHitPlayer();
     }
@@ -121,7 +121,7 @@ public class Woman : MonoBehaviour
     private void Escape()
     {
         moveDir = -1;
-        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
     }
     private void CheckDispose()
     {
