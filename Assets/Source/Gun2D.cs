@@ -70,7 +70,7 @@ public class Gun2D : MonoBehaviour {
 			yAxis = -yAxis;
 		}
 
-		angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg;
+		angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg +90;
 
 		if (angle > minRotation-90 && angle < maxRotation-90) {
 			if (playerController.facingRight) {
