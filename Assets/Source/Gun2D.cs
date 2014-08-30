@@ -4,12 +4,15 @@ using UnityEngine.UI;
 
 public class Gun2D : MonoBehaviour {
 
+	public Transform shootPoint;
+
 	public float fireRate = 3;
 	private float delay;
+	
+	public Transform muzzleFire;
+	public Transform impact;
 
-	public Transform bullet;
-
-	public int ammo;
+	public int ammo = 3;
 	public Text ammoDisplay;
 
 	public Text debugDisplay;
@@ -36,8 +39,16 @@ public class Gun2D : MonoBehaviour {
 
 	public void Fire () {
 	
-//		Instantiate (bullet, transform.position, transform.rotation);
-		Debug.Log ("Fire");
+		GameObject go = Instantiate (muzzleFire, shootPoint.position, shootPoint.rotation) as GameObject;
+//		go.transform.parent = this.transform;
+
+		RaycastHit2D hit = Physics2D.Raycast (new Vector2(shootPoint.position.x, shootPoint.position.y), new Vector2(shootPoint.right.x, shootPoint.right.y));
+
+		if (hit.collider.gameObject.layer == 8) {
+
+			Instantiate(impact, hit.point, Quaternion.identity);
+
+		}
 
 	}
 	
@@ -61,8 +72,16 @@ public class Gun2D : MonoBehaviour {
 			xAxis = Input.GetAxis ("GamepadX");
 			yAxis = Input.GetAxis ("GamepadY");
 		} else {
+			#if UNITY_STANDALONE
 			xAxis = Input.mousePosition.x - Screen.width/2 - transform.position.x;
 			yAxis = Input.mousePosition.y - Screen.height/2 - transform.position.y;
+			#endif
+			#if UNITY_ANDROID
+			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
+				xAxis = Input.GetTouch(0).deltaPosition;.x - Screen.width/2 - transform.position.x;
+				yAxis = Input.GetTouch(0).deltaPosition;.y - Screen.height/2 - transform.position.y;
+			}
+			#endif
 		}
 
 		if (!playerController.facingRight) {
@@ -73,7 +92,7 @@ public class Gun2D : MonoBehaviour {
 		if (useGamepad) {
 			angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg +90;
 		} else {
-			angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg -90;
+			angle = -Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg -90;
 		}
 
 //		if (angle > minRotation-90 && angle < maxRotation-90) {
@@ -84,7 +103,7 @@ public class Gun2D : MonoBehaviour {
 			}
 //		}
 
-		if (Input.GetMouseButton (0)) {
+		if (Input.GetButton("Fire1") || Input.GetAxis("FireJoystick") < -0.1) {
 			TryFire ();
 		}
 
