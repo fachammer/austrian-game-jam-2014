@@ -28,8 +28,8 @@ public class PlayerBehaviour : MonoBehaviour {
         packageCount = initialPackageCount;
         audioSource = transform.GetComponent<AudioSource>();
         light = GameObject.FindGameObjectWithTag(Tags.Light).GetComponent<Light>();
-        playerController = GameObject.FindGameObjectWithTag(Tags.Player).GetComponent<PlayerController>();
-        gun2D = GameObject.FindGameObjectWithTag(Tags.Player).transform.FindChild("Gun").GetComponent<Gun2D>();
+        playerController = GetComponent<PlayerController>();
+        gun2D = transform.FindChild("Gun").GetComponent<Gun2D>();
 
         gameOverObject.GetComponent<Text>().enabled = false;
         restartButton.GetComponent<Button>().enabled = false;
