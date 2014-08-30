@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 [RequireComponent(typeof(Transform))]
 public class DistributedObjectGenerator : MonoBehaviour
@@ -21,9 +21,10 @@ public class DistributedObjectGenerator : MonoBehaviour
     }
 
     private void Start() {
+        Debug.Log("start generator");
         Vector2[] positions = new Vector2[numberOfDoors];
         Vector3 position = transform.position;
-        Vector2 basePosition = new Vector2(position.x, position.y);
+        Vector2 basePosition = new Vector2(position.x, position.y - 1.0f);
         float baseDistance = corridorWidth / numberOfDoors;
 
         for (int i = 0; i < positions.Length; i++)

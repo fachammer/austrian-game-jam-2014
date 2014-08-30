@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class RandomIntervalSpawner : MonoBehaviour
 {
@@ -27,7 +27,7 @@ public class RandomIntervalSpawner : MonoBehaviour
         if (timer >= currentInterval) {
             timer = 0f;
             currentInterval = CalculateNewInterval(minSpawnInterval, maxSpawnInterval);
-            Instantiate(objectToSpawn, transform.position, transform.rotation);
+            Instantiate(objectToSpawn, transform.position + new Vector3(0f, 1.25f, 0f), transform.rotation);
 
             if (isClosed) {
                 Open();

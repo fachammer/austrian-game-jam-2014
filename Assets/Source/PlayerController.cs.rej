@@ -1,0 +1,18 @@
+diff a/Assets/Source/PlayerController.cs b/Assets/Source/PlayerController.cs	(rejected hunks)
+@@ -22,12 +22,16 @@
+ 
+     CircleCollider2D collCircle;
+     BoxCollider2D collBox;
++    GameObject gun;
++
++    public bool isRolling = false;
+ 
+     private void Awake() {
+         groundCheck = transform.Find("GroundCheck");
+ 
+         collCircle = GetComponent<CircleCollider2D>();
+         collBox = GetComponent<BoxCollider2D>();
++        gun = transform.FindChild("Gun").gameObject;
+     }
+ 
+     private void Update() {
