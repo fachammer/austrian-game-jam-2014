@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Gun2D : MonoBehaviour
 {
@@ -53,63 +53,26 @@ public class Gun2D : MonoBehaviour
             delay -= Time.deltaTime;
         }
 
+        float angle;
         if (useGamepad) {
-            if (Input.mousePosition != lastMousePos) {
-                lastMousePos = Input.mousePosition;
-                useGamepad = false;
-            }
+            float controllerX = Input.GetAxis("GamepadX");
+            float controllerY = Input.GetAxis("GamepadY");
+            angle = Mathf.Atan2(controllerY, controllerX) * Mathf.Rad2Deg;
         }
         else {
-            if (new Vector3(Input.GetAxis("GamepadX"), Input.GetAxis("GamepadY"), 0) != lastGamepad4n5Pos) {
-                lastGamepad4n5Pos = new Vector3(Input.GetAxis("GamepadX"), Input.GetAxis("GamepadY"), 0);
-                useGamepad = true;
-            }
+            Vector2 difference = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+            Debug.Log(difference);
+            angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
         }
 
-        float angle, xAxis, yAxis;
-
-        if (useGamepad) {
-            xAxis = Input.GetAxis("GamepadX");
-            yAxis = Input.GetAxis("GamepadY");
+        if (playerController.facingLeft) {
+            transform.eulerAngles = new Vector3(0, 0, 180 - angle);
+            transform.FindChild("ShootPoint").localEulerAngles = new Vector3(0, 0, -(90 - angle) * 2);
         }
         else {
-#if UNITY_STANDALONE
-            xAxis = Input.mousePosition.x - Screen.width / 2 - transform.position.x;
-            yAxis = Input.mousePosition.y - Screen.height / 2 - transform.position.y;
-#endif
-#if UNITY_ANDROID
-			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
-				xAxis = Input.GetTouch(0).deltaPosition;.x - Screen.width/2 - transform.position.x;
-				yAxis = Input.GetTouch(0).deltaPosition;.y - Screen.height/2 - transform.position.y;
-			}
-#endif
+            transform.eulerAngles = new Vector3(0, 0, angle);
+            transform.FindChild("ShootPoint").localEulerAngles = new Vector3(0, 0, 0);
         }
-
-        if (!playerController.facingRight) {
-            xAxis = -xAxis;
-            yAxis = -yAxis;
-        }
-
-        if (useGamepad) {
-            if (xAxis > 0.1 || xAxis < -0.1 || yAxis > 0.1 || yAxis < -0.1) {
-                angle = Mathf.Atan2(xAxis, yAxis) * Mathf.Rad2Deg + 90;
-            }
-            else {
-                angle = Mathf.Atan2(xAxis, 0) * Mathf.Rad2Deg + 90;
-            }
-        }
-        else {
-            angle = -Mathf.Atan2(xAxis, yAxis) * Mathf.Rad2Deg - 90;
-        }
-
-        // if (angle > minRotation-90 && angle < maxRotation-90) {
-        if (playerController.facingRight) {
-            transform.localEulerAngles = new Vector3(0, 0, -angle);
-        }
-        else {
-            transform.localEulerAngles = new Vector3(0, 0, angle);
-        }
-        // }
 
         if (Input.GetButton("Fire1") || Input.GetAxis("FireJoystick") < -0.1) {
             TryFire();

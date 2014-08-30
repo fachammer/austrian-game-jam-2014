@@ -5,32 +5,29 @@ public class PlayerController : MonoBehaviour
 {
     // Movement Settings
     public float moveForce = 365f;
-    public float rollForce = 150f;
-    float curForce;
 
+    public float rollForce = 150f;
     public float maxSpeedRolling = 5f;
     public float jumpForce = 1000f;
-
     public float maxSpeedWalking = 10;
-
-    private float maxSpeed;
 
     [HideInInspector]
     public bool jump = false;
 
     [HideInInspector]
-    public bool facingRight = false;
+    public bool facingLeft = false;
 
+    public bool isRolling = false;
+    private float curForce;
+    private float maxSpeed;
     private Transform groundCheck;
     private bool grounded = false;
 
-    bool rollKeyDown = false;
+    private bool rollKeyDown = false;
 
-    CircleCollider2D collCircle;
-    BoxCollider2D collBox;
-    GameObject gun;
-
-    public bool isRolling = false;
+    private CircleCollider2D collCircle;
+    private BoxCollider2D collBox;
+    private GameObject gun;
 
     private void Awake() {
         groundCheck = transform.Find("GroundCheck");
@@ -40,7 +37,7 @@ public class PlayerController : MonoBehaviour
         gun = transform.FindChild("Gun").gameObject;
     }
 
-    void Start() {
+    private void Start() {
         maxSpeed = maxSpeedWalking;
 
         curForce = moveForce;
@@ -65,8 +62,8 @@ public class PlayerController : MonoBehaviour
             if (rollKeyDown) {
                 // roll
                 isRolling = true;
-                collCircle.enabled = true;
-                collBox.enabled = false;
+                //collCircle.enabled = true;
+                //collBox.enabled = false;
                 rigidbody2D.fixedAngle = false;
                 rigidbody2D.gravityScale = 6f;
                 maxSpeed = maxSpeedRolling;
@@ -75,10 +72,10 @@ public class PlayerController : MonoBehaviour
             else {
                 // dont roll
                 isRolling = false;
-                collCircle.enabled = false;
-                collBox.enabled = true;
+                //collCircle.enabled = false;
+                //collBox.enabled = true;
                 rigidbody2D.fixedAngle = true;
-                rigidbody2D.gravityScale = 12f;
+                rigidbody2D.gravityScale = 4f;
                 transform.rotation = Quaternion.identity;
                 gun.transform.rotation = Quaternion.identity;
                 maxSpeed = maxSpeedWalking;
@@ -100,9 +97,9 @@ public class PlayerController : MonoBehaviour
             rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
         }
 
-        if (horizontalInput > 0 && facingRight)
+        if (horizontalInput > 0 && facingLeft)
             Flip();
-        else if (horizontalInput < 0 && !facingRight)
+        else if (horizontalInput < 0 && !facingLeft)
             Flip();
 
         if (jump) {
@@ -114,7 +111,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Flip() {
-        facingRight = !facingRight;
+        facingLeft = !facingLeft;
 
         Vector3 newScale = transform.localScale;
         newScale.x *= -1;
