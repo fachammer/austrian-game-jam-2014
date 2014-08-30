@@ -18,6 +18,7 @@ public class Health : MonoBehaviour
         if (CurrentHealth > 0 && damage > 0) {
             CurrentHealth -= damage;
             bloodEffects.Stimulate();
+            
 
             if (OnHit != null) OnHit();
 

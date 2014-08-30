@@ -35,21 +35,33 @@ public class PlayerBehaviour : MonoBehaviour
         bloodEffects = GameObject.Find("bloodEffects");
 
         hideGUI();
+
+        health.OnHit += new Health.HealthHandler(health_OnHit);
+        health.OnDeath += new Health.HealthHandler(health_OnDeath);
+    }
+
+    void health_OnDeath() {
+        Death();
+    }
+
+    void health_OnHit() {
+        audioSource.clip = hitSound;
+        audioSource.Play();
     }
     public void Hit()
     {
         losePackage();
         health.TakeDamage(1);
 
-        if (health.CurrentHealth == 0)
-        {
-            Death();
-        }
-        else
-        {
-            audioSource.clip = hitSound;
-            audioSource.Play();
-        }
+        //if (health.CurrentHealth <= 0)
+        //{
+        //    Death();
+        //}
+        //else
+        //{
+        //    audioSource.clip = hitSound;
+        //    audioSource.Play();
+        //}
     }
 
     private void Death() {

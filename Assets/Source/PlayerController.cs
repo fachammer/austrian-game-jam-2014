@@ -5,9 +5,15 @@ public class PlayerController : MonoBehaviour
 {
     // Movement Settings
     public float moveForce = 365f;
+    public float rollForce = 150f;
+    float curForce;
 
-    public float maxSpeed = 5f;
+    public float maxSpeedRolling = 5f;
     public float jumpForce = 1000f;
+
+    public float maxSpeedWalking = 10;
+
+    private float maxSpeed;
 
     [HideInInspector]
     public bool jump = false;
@@ -34,6 +40,12 @@ public class PlayerController : MonoBehaviour
         gun = transform.FindChild("Gun").gameObject;
     }
 
+    void Start() {
+        maxSpeed = maxSpeedWalking;
+
+        curForce = moveForce;
+    }
+
     private void Update() {
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
@@ -57,7 +69,8 @@ public class PlayerController : MonoBehaviour
                 collBox.enabled = false;
                 rigidbody2D.fixedAngle = false;
                 rigidbody2D.gravityScale = 6f;
-
+                maxSpeed = maxSpeedRolling;
+                curForce = rollForce;
             }
             else {
                 // dont roll
@@ -68,6 +81,8 @@ public class PlayerController : MonoBehaviour
                 rigidbody2D.gravityScale = 12f;
                 transform.rotation = Quaternion.identity;
                 gun.transform.rotation = Quaternion.identity;
+                maxSpeed = maxSpeedWalking;
+                curForce = moveForce;
             }
         }
     }
@@ -78,7 +93,7 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
 
         if (horizontalInput * rigidbody2D.velocity.x < maxSpeed) {
-            rigidbody2D.AddForce(Vector2.right * horizontalInput * moveForce);
+            rigidbody2D.AddForce(Vector2.right * horizontalInput * curForce);
         }
 
         if (Mathf.Abs(rigidbody2D.velocity.x) > maxSpeed) {
