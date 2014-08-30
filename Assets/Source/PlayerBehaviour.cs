@@ -5,12 +5,17 @@ using System.Collections;
 public class PlayerBehaviour : MonoBehaviour {
 
     public int initialPackageCount = 3;
+    public float minXForce = 10.0f;
+    public float maxXForce = 15.0f;
+    public float minYForce = 10.0f;
+    public float maxYForce = 15.0f;
     public AudioClip deathSound;
     public AudioClip hitSound;
     public GameObject gameOverObject;
     public GameObject restartButton;
     public GameObject quitButton;
     public GameObject gamepadRestartQuitHint;
+    public GameObject packagePrefab;
 
     private new Light light;
     private AudioSource audioSource;
@@ -48,6 +53,7 @@ public class PlayerBehaviour : MonoBehaviour {
         {
             audioSource.clip = hitSound;
             audioSource.Play();
+            losePackage();
         }
     }
 
@@ -70,5 +76,14 @@ public class PlayerBehaviour : MonoBehaviour {
             restartButton.GetComponent<Button>().enabled = true;
             quitButton.GetComponent<Button>().enabled = true;
         }
+    }
+
+    private void losePackage()
+    {
+        GameObject package = (GameObject)Instantiate(packagePrefab, transform.position, Quaternion.identity);
+
+        float xForce = (Random.Range(0, 2) == 0 ? Random.Range(-maxXForce, -minXForce) : Random.Range(minXForce, maxXForce));
+        float yForce = Random.Range(minYForce, maxYForce);
+        package.rigidbody2D.AddForce(new Vector2(xForce, yForce), ForceMode2D.Impulse);
     }
 }
