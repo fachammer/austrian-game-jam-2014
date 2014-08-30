@@ -12,10 +12,18 @@ public class Gun2D : MonoBehaviour {
 	public int ammo;
 	public Text ammoDisplay;
 
+	public Text debugDisplay;
+
 	public float minRotation = 0, maxRotation = 360;
+
+	public PlayerController playerController;
+
+	public bool useGamepad;
 
 	void Start () {
 	
+		useGamepad = PlayerPrefs.GetInt ("useGamepad", 0) > 0 ? true : false;
+
 	}
 
 	public void TryFire () {
@@ -45,9 +53,31 @@ public class Gun2D : MonoBehaviour {
 			ammo += 3;
 		}
 
-		float newRotation = -Mathf.Atan2(Input.mousePosition.x - Screen.width/2 - transform.position.x, Input.mousePosition.y - Screen.height/2 - transform.position.y)*Mathf.Rad2Deg + 90;
-		if (newRotation > minRotation-90 && newRotation < maxRotation-90) {
-			transform.localEulerAngles = new Vector3(0,0,newRotation);
+		debugDisplay.text = "GamepadInput: "+Input.GetAxis("GamepadX")+" "+Input.GetAxis("GamepadY");
+
+		float angle, xAxis, yAxis;
+
+		if (useGamepad) {
+			xAxis = Input.GetAxis ("GamepadX");
+			yAxis = Input.GetAxis ("GamepadY");
+		} else {
+			xAxis = Input.mousePosition.x - Screen.width/2 - transform.position.x;
+			yAxis = Input.mousePosition.y - Screen.height/2 - transform.position.y;
+		}
+
+		if (!playerController.facingRight) {
+			xAxis = -xAxis;
+			yAxis = -yAxis;
+		}
+
+		angle = Mathf.Atan2(xAxis,yAxis) * Mathf.Rad2Deg;
+
+		if (angle > minRotation-90 && angle < maxRotation-90) {
+			if (playerController.facingRight) {
+				transform.localEulerAngles = new Vector3(0,0,-angle);
+			} else {
+				transform.localEulerAngles = new Vector3(0,0,angle);
+			}
 		}
 
 		if (Input.GetMouseButton (0)) {

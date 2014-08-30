@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
 	[HideInInspector]
 	public bool jump = false;
 	[HideInInspector]
-	public bool facingLeft = false;
+	public bool facingRight = false;
 
 	private Transform groundCheck;
 	private bool grounded = false;	
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Update () {
 
-		grounded = Physics2D.Linecast(transform.position, groundCheck.position); 
+		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")); 
 
 		if (Input.GetButtonDown("Jump") && grounded) {
 			jump = true;
@@ -47,9 +47,9 @@ public class PlayerController : MonoBehaviour {
 			rigidbody2D.velocity = new Vector2 (Mathf.Sign (rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
 		}
 
-		if(horizontalInput > 0 && !facingLeft)
+		if(horizontalInput > 0 && facingRight)
 			Flip();
-		else if(horizontalInput < 0 && facingLeft)
+		else if(horizontalInput < 0 && !facingRight)
 			Flip();
 
 		if (jump) {
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Flip () {
-		facingLeft = !facingLeft;
+		facingRight = !facingRight;
 
 		Vector3 newScale = transform.localScale;
 		newScale.x *= -1;
