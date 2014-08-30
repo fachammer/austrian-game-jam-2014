@@ -71,6 +71,9 @@ public class PlayerController : MonoBehaviour
                 rigidbody2D.gravityScale = 6f;
                 maxSpeed = maxSpeedRolling;
                 curForce = rollForce;
+
+                Camera.main.GetComponent<AudioSource>().volume = 0.2f;
+                GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.0f;
             }
             else {
                 // dont roll
@@ -83,6 +86,10 @@ public class PlayerController : MonoBehaviour
                 gun.transform.rotation = Quaternion.identity;
                 maxSpeed = maxSpeedWalking;
                 curForce = moveForce;
+
+
+                Camera.main.GetComponent<AudioSource>().volume = 0.0f;
+                GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.5f;
             }
         }
     }

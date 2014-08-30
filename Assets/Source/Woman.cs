@@ -96,6 +96,9 @@ public class Woman : MonoBehaviour
 		dtt.time = 5;
 		GetComponent<Health> ().enabled = false;
 		this.enabled = false;
+
+        rigidbody2D.AddTorque(Random.Range(-500.0f, 500.0f));
+        Scream();
     }
 
     private void Escape() {
