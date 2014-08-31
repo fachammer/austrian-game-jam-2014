@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour
 {
@@ -8,7 +9,13 @@ public class BossBehaviour : MonoBehaviour
     public float jumpCheckInterval;
     public float jumpForce;
 
+    public float shootProbability;
+    public float shootCheckInterval;
+    public GameObject projectile;
+    public Transform shootPoint;
+
     private float jumpCheckTimer;
+    private float shootCheckTimer;
     private Transform playerTransform;
 
     private void Start() {
@@ -19,14 +26,26 @@ public class BossBehaviour : MonoBehaviour
         DoFacing();
         DoMoving();
         DoJumping();
+        DoShooting();
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.transform == playerTransform) {
             playerTransform.GetComponent<Health>().TakeDamage(1);
-            float xDirection = playerTransform.position.x - transform.position.x;
-            rigidbody2D.velocity = new Vector2(-xDirection * velocity * 1000, rigidbody2D.velocity.y);
+            StopAllCoroutines();
+            StartCoroutine(DashAway());
         }
+    }
+
+    private IEnumerator DashAway() {
+        float xDirection = playerTransform.position.x - transform.position.x;
+
+        for (int i = 0; i < 10; i++) {
+            rigidbody2D.velocity = new Vector2(-xDirection * velocity * 5, rigidbody2D.velocity.y);
+            yield return null;
+        }
+
+        Jump();
     }
 
     private void DoFacing() {
@@ -49,7 +68,6 @@ public class BossBehaviour : MonoBehaviour
     }
 
     private void DoJumping() {
-        Debug.DrawLine(transform.position, transform.position - Vector3.up * 2.8f, Color.green);
         if (!IsJumping()) {
             jumpCheckTimer += Time.deltaTime;
 
@@ -63,7 +81,7 @@ public class BossBehaviour : MonoBehaviour
     }
 
     private bool IsJumping() {
-        return Physics2D.Raycast(transform.position, -Vector2.up, 2, LayerMask.GetMask("Ground")).collider != null;
+        return Physics2D.Raycast(transform.position, -Vector2.up * 2.8f, 2, LayerMask.GetMask("Ground")).collider != null;
     }
 
     private bool ShouldJump() {
@@ -72,5 +90,25 @@ public class BossBehaviour : MonoBehaviour
 
     private void Jump() {
         rigidbody2D.AddForce(Vector2.up * jumpForce);
+    }
+
+    private void DoShooting() {
+        shootCheckTimer += Time.deltaTime;
+
+        if (shootCheckTimer >= shootCheckInterval) {
+            if (ShouldShoot())
+                Shoot();
+
+            shootCheckTimer = 0f;
+        }
+    }
+
+    private bool ShouldShoot() {
+        return Random.value <= shootProbability;
+    }
+
+    private void Shoot() {
+        GameObject instance = Projectile.Instantiate(projectile, playerTransform.position.x - transform.position.x);
+        instance.transform.position = shootPoint.position;
     }
 }
