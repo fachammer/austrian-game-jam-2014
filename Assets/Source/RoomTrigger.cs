@@ -15,16 +15,11 @@ public class RoomTrigger : MonoBehaviour {
     {
         if (player.transform.position.x >= transform.position.x - 0.2f)
         {
-            if (Random.Range(0, 5) == 0)
+            if (Random.Range(0, 3) == 0)
             {
-                GameObject newRoom = (GameObject)Instantiate(stairsDown, transform.parent.FindChild("END").transform.position, Quaternion.identity);
+                GameObject newRoom = (GameObject)Instantiate((Random.Range(0, 2) == 0 ? stairsDown : stairsUp), transform.parent.FindChild("END").transform.position, Quaternion.identity);
             }
-            else if (Random.Range(0, 5) == 1)
-            {
-                GameObject newRoom = (GameObject)Instantiate(stairsUp, transform.parent.FindChild("END").transform.position, Quaternion.identity);
-            }
-            else
-            {
+            else {
                 GameObject newRoom = (GameObject)Instantiate(tilePrefab, transform.parent.FindChild("END").transform.position, Quaternion.identity);
             }
             gameObject.SetActive(false);
