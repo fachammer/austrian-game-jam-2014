@@ -19,13 +19,16 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector]
     public bool facingLeft = false;
-
+    [HideInInspector]
     public bool isRolling = false;
     private float curForce;
     private float maxSpeed;
     private bool grounded = false;
 
     private bool rollKeyDown = false;
+
+    [HideInInspector]
+    public bool isKnockedBack = false;
 
     private CircleCollider2D collCircle;
     private BoxCollider2D collBox;
@@ -43,6 +46,15 @@ public class PlayerController : MonoBehaviour
 
         curForce = moveForce;
         jumpForce = walkJumpForce;
+    }
+
+    public void StopKnockback() {
+        isKnockedBack = false;
+    }
+
+    public void StartKnockback() {
+        isKnockedBack = true;
+        Invoke("StopKnockback", 0.5f);
     }
 
     private void Update() {
@@ -98,28 +110,30 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        Vector2 velocity = rigidbody2D.velocity;
 
-        float horizontalInput = Input.GetAxis("Horizontal");
+        if (!isKnockedBack) {
+            Vector2 velocity = rigidbody2D.velocity;
 
-        if (horizontalInput * rigidbody2D.velocity.x < maxSpeed) {
-            rigidbody2D.AddForce(Vector2.right * horizontalInput * curForce);
+            float horizontalInput = Input.GetAxis("Horizontal");
+
+            if (horizontalInput * rigidbody2D.velocity.x < maxSpeed) {
+                rigidbody2D.AddForce(Vector2.right * horizontalInput * curForce);
+            }
+
+            if (Mathf.Abs(rigidbody2D.velocity.x) > maxSpeed) {
+                rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
+            }
+
+            if (horizontalInput > 0 && facingLeft)
+                Flip();
+            else if (horizontalInput < 0 && !facingLeft)
+                Flip();
+
+            if (jump) {
+                rigidbody2D.AddForce(new Vector2(0f, jumpForce));
+                jump = false;
+            }
         }
-
-        if (Mathf.Abs(rigidbody2D.velocity.x) > maxSpeed) {
-            rigidbody2D.velocity = new Vector2(Mathf.Sign(rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
-        }
-
-        if (horizontalInput > 0 && facingLeft)
-            Flip();
-        else if (horizontalInput < 0 && !facingLeft)
-            Flip();
-
-        if (jump) {
-            rigidbody2D.AddForce(new Vector2(0f, jumpForce));
-            jump = false;
-        }
-
         // GetComponent<Animator>().SetInteger("directionX", (int)rigidbody2D.velocity.x);
     }
 

@@ -18,6 +18,8 @@ public class RandomIntervalSpawner : MonoBehaviour
     private int womenCounter = 0;
     private GameObject player;
 
+    public GameObject guardPrefab;
+
     private static float CalculateNewInterval(float minInterval, float maxInterval) {
         return Random.Range(minInterval, maxInterval);
     }
@@ -25,6 +27,11 @@ public class RandomIntervalSpawner : MonoBehaviour
     private void Start() {
         currentInterval = CalculateNewInterval(minSpawnInterval, maxSpawnInterval);
         player = GameObject.Find("Player");
+
+        if (Random.Range(0, 100) <= 20)
+        {
+            Instantiate(guardPrefab, transform.position + new Vector3(0,5,0), Quaternion.identity);
+        }
     }
 
     private void Update() {
