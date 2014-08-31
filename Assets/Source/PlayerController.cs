@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         if (rollKeyDown != rollKeyPrev) {
             if (rollKeyDown) {
                 // roll
+                Debug.Log("roll");
                 isRolling = true;
                 //collCircle.enabled = true;
                 //collBox.enabled = false;
