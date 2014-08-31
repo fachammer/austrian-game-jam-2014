@@ -6,6 +6,7 @@ public class RandomIntervalSpawner : MonoBehaviour
     public float minSpawnInterval;
     public float maxSpawnInterval;
     public int maxWomenSpawn = 3;
+    public int spawnDistance = 50;
 
     public Sprite spriteOpened;
     public AudioClip sfxOpen;
@@ -13,8 +14,9 @@ public class RandomIntervalSpawner : MonoBehaviour
 
     private float currentInterval;
     private float timer;
-    private bool playerTooClose;
+    private bool dontSpawn;
     private int womenCounter = 0;
+    private GameObject player;
 
     private static float CalculateNewInterval(float minInterval, float maxInterval) {
         return Random.Range(minInterval, maxInterval);
@@ -22,6 +24,7 @@ public class RandomIntervalSpawner : MonoBehaviour
 
     private void Start() {
         currentInterval = CalculateNewInterval(minSpawnInterval, maxSpawnInterval);
+        player = GameObject.Find("Player");
     }
 
     private void Update() {
@@ -33,20 +36,23 @@ public class RandomIntervalSpawner : MonoBehaviour
             currentInterval = CalculateNewInterval(minSpawnInterval, maxSpawnInterval);
 
             Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3);
-            playerTooClose = false;
+            dontSpawn = false;
             foreach(Collider2D c in colliders){
                 if(c.gameObject.name == "Player"){
-                    playerTooClose = true;
+                    dontSpawn = true;
                 }
             }
 
-            if(!playerTooClose){
-                Instantiate(objectToSpawn, transform.position + new Vector3(0f, 1.25f, 0f), transform.rotation);
-                womenCounter++;
+            if (!dontSpawn)
+            {                
+                if(Mathf.Abs(player.transform.position.x - transform.position.x) < spawnDistance){                 
+                    Instantiate(objectToSpawn, transform.position + new Vector3(0f, 1.25f, 0f), transform.rotation);
+                    womenCounter++;
                 
-                if (isClosed)
-                {
-                    Open();
+                    if (isClosed)
+                    {
+                        Open();
+                    }
                 }
             }
 
