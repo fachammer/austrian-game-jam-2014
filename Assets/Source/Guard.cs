@@ -45,7 +45,7 @@ public class Guard : MonoBehaviour {
 	void Start () {
         timeTillRndJump = Random.Range(0.5f, 3.0f);
         spawnX = transform.position.x;
-        moveDir = 1;
+        moveDir = -1;
 	}
 	
 	// Update is called once per frame
@@ -65,6 +65,16 @@ public class Guard : MonoBehaviour {
 
                 player.GetComponent<Health>().TakeDamage(1);
                 timeTillAttack = attackCooldown;
+
+                if (player.transform.position.x < transform.position.x) {
+                    player.rigidbody2D.AddForce(new Vector2(-3000, 200));
+                    MoveRight();
+                }
+                else {
+                    player.rigidbody2D.AddForce(new Vector2(3000, 200));
+                    MoveLeft();
+                }
+                player.StartKnockback();
             }
         }
         else {
@@ -76,16 +86,22 @@ public class Guard : MonoBehaviour {
         // move from left to right 
         float distToSpawn = spawnX - transform.position.x;
         if (distToSpawn > maxDistToSpawn) {
-            moveDir = 1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * moveDir, transform.localScale.y, transform.localScale.z);
+            MoveLeft();
         }
         else if (distToSpawn < -maxDistToSpawn) {
-            moveDir = -1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * moveDir, transform.localScale.y, transform.localScale.z);
+            MoveRight();
         }
     }
 
+    void MoveRight() {
+        moveDir = -1;
+        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x) * moveDir, transform.localScale.y, transform.localScale.z);
+    }
 
+    void MoveLeft() {
+        moveDir = 1;
+        transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x) * moveDir, transform.localScale.y, transform.localScale.z);
+    }
 
 
     void HandleObstacles() {

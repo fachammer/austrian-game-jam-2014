@@ -9,6 +9,8 @@ public class Woman : MonoBehaviour
     public float evasionClearDistance;
     public float jumpCastLength = 1f;
 
+    public SpriteRenderer bloodSplatter;
+
     public GameObject package;
 
     public AudioClip[] screams;
@@ -24,6 +26,7 @@ public class Woman : MonoBehaviour
 
     //private GameObject player;
     PlayerController player;
+    bool dead = false;
 
     private void Awake() {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -39,6 +42,15 @@ public class Woman : MonoBehaviour
     void Woman_OnDeath() {
         Scream();
         BloodEffects.Instance.Stimulate();
+        Instantiate(bloodSplatter, transform.position + new Vector3(0, 1, 0), Random.rotation * new Quaternion(0, 1, 1, 1));
+        renderer.enabled = false;
+        collider2D.enabled = false;
+        Invoke("Deactivate", 2);
+        dead = true;
+    }
+
+    void Deactivate() {
+        Destroy(gameObject);
     }
 
     private void Start() { 
@@ -47,19 +59,20 @@ public class Woman : MonoBehaviour
 
     private void Update()
     {
-        if (!hasAttacked)
-        {
-            Attack();
-        }
-        else
-        {
-            Escape();
-        }
+        if (!dead) {
+            if (!hasAttacked) {
+                Attack();
+            }
+            else {
+                Escape();
+            }
 
-        timeSinceJump += Time.deltaTime;
-        HandleObstacles();
-        DoEvasionStuff();
-        CheckDispose();
+            timeSinceJump += Time.deltaTime;
+            HandleObstacles();
+            DoEvasionStuff();
+
+            CheckDispose();
+        }
     }
 
     private void Attack()
@@ -83,7 +96,9 @@ public class Woman : MonoBehaviour
         if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance &&
             Mathf.Abs(player.transform.position.y - transform.position.y) <= grabDistance)
         {
-            if (player.isRolling) {
+            if (player.isRolling)
+            {
+                Instantiate(bloodSplatter, transform.position + new Vector3(0, 1, 0), Random.rotation * new Quaternion(0, 1, 1, 1));
                 ThrowAway();
             }
             else {
@@ -96,6 +111,7 @@ public class Woman : MonoBehaviour
     public void ThrowAway()
     {
         rigidbody2D.fixedAngle = false;
+        rigidbody2D.angularDrag = 0;
         GetComponent<BoxCollider2D>().enabled = false;
         if (moveDir >= 0)
         {
@@ -105,11 +121,12 @@ public class Woman : MonoBehaviour
         {
             rigidbody2D.AddForce(new Vector2(Random.Range(500, 1000), Random.Range(1500, 4000)));
         }
-        rigidbody2D.AddTorque(50);
+        rigidbody2D.AddTorque(Random.Range(-500,500));
         DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed>();
         dtt.time = 5;
         GetComponent<Health>().enabled = false;
         this.enabled = false;
+        Scream();
     }
 
     private void TakePackage()
@@ -132,6 +149,7 @@ public class Woman : MonoBehaviour
             if (sqrDist >= 250000)
             {
                 Destroy(gameObject);
+                //gameObject.SetActive(false);
             }
         }
     }
@@ -202,8 +220,8 @@ public class Woman : MonoBehaviour
     }
 
     void Scream() {
-        //audio.clip = screams[Random.Range(0, screams.Length - 1)];
-        //audio.Play();
-        AudioSource.PlayClipAtPoint(screams[Random.Range(0, screams.Length - 1)], transform.position);
+        audio.clip = screams[Random.Range(0, screams.Length - 1)];
+        audio.Play();
+        //AudioSource.PlayClipAtPoint(screams[Random.Range(0, screams.Length - 1)], transform.position);
     }
 }
