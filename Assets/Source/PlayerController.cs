@@ -8,7 +8,10 @@ public class PlayerController : MonoBehaviour
 
     public float rollForce = 150f;
     public float maxSpeedRolling = 5f;
-    public float jumpForce = 1000f;
+    public float walkJumpForce = 2000f;
+    public float rollJumpForce = 3000f;
+    float jumpForce;
+
     public float maxSpeedWalking = 10;
 
     [HideInInspector]
@@ -20,7 +23,6 @@ public class PlayerController : MonoBehaviour
     public bool isRolling = false;
     private float curForce;
     private float maxSpeed;
-    private Transform groundCheck;
     private bool grounded = false;
 
     private bool rollKeyDown = false;
@@ -30,7 +32,6 @@ public class PlayerController : MonoBehaviour
     private GameObject gun;
 
     private void Awake() {
-        groundCheck = transform.Find("GroundCheck");
 
         collCircle = GetComponent<CircleCollider2D>();
         collBox = GetComponent<BoxCollider2D>();
@@ -41,10 +42,13 @@ public class PlayerController : MonoBehaviour
         maxSpeed = maxSpeedWalking;
 
         curForce = moveForce;
+        jumpForce = walkJumpForce;
     }
 
     private void Update() {
-        grounded = Physics2D.Linecast(transform.position, groundCheck.position, LayerMask.GetMask("Obstacle", "Ground"));
+        grounded = Physics2D.Linecast(transform.position, 
+            new Vector2(transform.position.x, transform.position.y) + new Vector2(0,-3), 
+            LayerMask.GetMask("Obstacle", "Ground"));
 
         if (Input.GetButtonDown("Jump") && grounded) {
             jump = true;
@@ -69,6 +73,7 @@ public class PlayerController : MonoBehaviour
                 rigidbody2D.gravityScale = 6f;
                 maxSpeed = maxSpeedRolling;
                 curForce = rollForce;
+                jumpForce = rollJumpForce;
 
                 Camera.main.GetComponent<AudioSource>().volume = 0.2f;
                 GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.0f;
@@ -84,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 gun.transform.rotation = Quaternion.identity;
                 maxSpeed = maxSpeedWalking;
                 curForce = moveForce;
-
+                jumpForce = walkJumpForce;
 
                 Camera.main.GetComponent<AudioSource>().volume = 0.0f;
                 GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.5f;
