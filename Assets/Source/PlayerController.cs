@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
             jump = false;
         }
 
-        GetComponent<Animator>().SetInteger("directionX", (int)rigidbody2D.velocity.x);
+        // GetComponent<Animator>().SetInteger("directionX", (int)rigidbody2D.velocity.x);
     }
 
     private void Flip() {
