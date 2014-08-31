@@ -8,14 +8,17 @@ public class IntroPlayerHOLYSHIT : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 			
-		Invoke("movePlayer", 35.0f);
-		Invoke ("shoutHOLYSHIT", 35.5f);
+		Invoke("movePlayer", 30.0f);
+		Invoke ("shoutHOLYSHIT", 30.5f);
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		if(Input.GetButtonDown("Jump") || Input.GetKeyDown("space")) {
+			Application.LoadLevel("rooms");
+		}
 		 
 	}
 
@@ -23,7 +26,7 @@ public class IntroPlayerHOLYSHIT : MonoBehaviour {
 
 		rigidbody2D.fixedAngle = false;
 		rigidbody2D.gravityScale = 0f;
-		rigidbody2D.AddTorque(200f);
+		rigidbody2D.AddTorque(80f);
 		rigidbody2D.angularDrag = 0f;
 		rigidbody2D.AddForce(Vector2.right * 800f);
 		rigidbody2D.AddForce(Vector2.up * 25f);

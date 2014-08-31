@@ -17,8 +17,6 @@ public class PlayerBehaviour : MonoBehaviour
     public Image restartButton;
     public Image quitButton;
     public Image backGround;
-    public SpriteRenderer XBoxA;
-    public SpriteRenderer XBoxB;
     public GameObject packagePrefab;
 
     private AudioSource audioSource;
@@ -40,6 +38,7 @@ public class PlayerBehaviour : MonoBehaviour
         health.OnDeath += new Health.HealthHandler(health_OnDeath);
     }
 
+
     void health_OnDeath() {
         Death();
     }
@@ -50,6 +49,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     public void Hit()
     {
+
         //losePackage();
         health.TakeDamage(1);
 
@@ -72,6 +72,7 @@ public class PlayerBehaviour : MonoBehaviour
         audioSource.Play();
 
         showGUI(gun2D.useGamepad);
+        GameObject.Find("EndGame").GetComponent<EndGame>().dead = true;
     }
 
     private void losePackage() {
@@ -91,8 +92,6 @@ public class PlayerBehaviour : MonoBehaviour
         restartButton.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(false);
         gamepadHint.enabled = false;
-        XBoxA.enabled = false;
-        XBoxB.enabled = false;
     }
 
     private void showGUI(bool gamePad) {
@@ -101,8 +100,6 @@ public class PlayerBehaviour : MonoBehaviour
         gameOverObject.enabled = true;
         if (gamePad) {
             gamepadHint.enabled = true;
-            XBoxA.enabled = true;
-            XBoxB.enabled = true;
         }
         else {
             restartButton.gameObject.SetActive(true);

@@ -28,7 +28,7 @@ public class RandomIntervalSpawner : MonoBehaviour
         currentInterval = CalculateNewInterval(minSpawnInterval, maxSpawnInterval);
         player = GameObject.Find("Player");
 
-        if (Random.Range(0, 100) <= 20)
+        if (Random.Range(0, 100) <= 40)
         {
             Instantiate(guardPrefab, transform.position + new Vector3(0,5,0), Quaternion.identity);
         }

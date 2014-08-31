@@ -4,8 +4,8 @@ using System.Collections;
 public class Destroyable : MonoBehaviour {
     PlayerController player;
     CircleCollider2D playerColl;
-    Sprite spriteDestroyed;
-    AudioClip sfxDestroy;
+    public Sprite spriteDestroyed;
+    public AudioClip sfxDestroy;
 
     bool isDestroyed = false;
 
@@ -25,10 +25,11 @@ public class Destroyable : MonoBehaviour {
             if (player.isRolling) {
                 float sqrDist = (player.transform.position - transform.position).magnitude;
 
-                if (sqrDist <= playerColl.radius * 1.4) {
+                if (sqrDist <= playerColl.radius * 2) {
                     isDestroyed = true;
                     GetComponent<SpriteRenderer>().sprite = spriteDestroyed;
                     collider2D.enabled = false;
+                    rigidbody2D.isKinematic = true;
                     audio.clip = sfxDestroy;
                     audio.Play();
                 }

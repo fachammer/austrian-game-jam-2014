@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Guard : MonoBehaviour {
 
@@ -27,6 +28,9 @@ public class Guard : MonoBehaviour {
     PlayerController player;
     CircleCollider2D playerColl;
     CircleCollider2D coll;
+
+    int counter;
+    Text killCount;
 
     void Awake() {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -56,6 +60,10 @@ public class Guard : MonoBehaviour {
             renderer.enabled = false;
         collider2D.enabled = false;
         Invoke("Deactivate", 2);
+
+        counter = int.Parse(killCount.text);
+        counter++;
+        killCount.text = counter.ToString();
     }
 
 
@@ -68,6 +76,8 @@ public class Guard : MonoBehaviour {
         timeTillRndJump = Random.Range(0.5f, 3.0f);
         spawnX = transform.position.x;
         moveDir = -1;
+
+        killCount = GameObject.Find("KillCount").GetComponent<Text>();
 	}
 	
 	// Update is called once per frame
@@ -134,10 +144,8 @@ public class Guard : MonoBehaviour {
         if (r.collider != null) {
 
             Debug.Log(r.collider.gameObject.name);
-            if (timeSinceJump >= 0.3f) {
-                jump = true;
-                timeSinceJump = 0;
-            }
+            if (moveDir == 1) MoveRight();
+            else MoveLeft();
         }
         else {
             //jump = false;

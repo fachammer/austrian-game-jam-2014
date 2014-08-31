@@ -28,7 +28,7 @@ public class Gun2D : MonoBehaviour
         // GameObject muzzleFireGO = Instantiate (muzzleFire, shootPoint.position,
         // shootPoint.rotation) as GameObject; muzzleFireGO.transform.parent = this.transform;
 
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(shootPoint.position.x, shootPoint.position.y), new Vector2(shootPoint.right.x, shootPoint.right.y), 100f,
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(shootPoint.position.x, shootPoint.position.y), new Vector2(shootPoint.right.x, shootPoint.right.y), 20f,
             LayerMask.GetMask("Obstacle", "Enemy", "Ground"));
         Vector2 shootPoint2D = new Vector2(shootPoint.position.x, shootPoint.position.y);
         Debug.DrawLine(shootPoint2D, shootPoint2D + new Vector2(shootPoint.right.x, shootPoint.right.y) * 20);
@@ -51,6 +51,7 @@ public class Gun2D : MonoBehaviour
     }
 
     private void Update() {
+        Screen.lockCursor = useGamepad;
 
 		Vector3 controllerInput = new Vector2 (Input.GetAxis("GamepadX"), Input.GetAxis("GamepadY"));
 
@@ -58,7 +59,7 @@ public class Gun2D : MonoBehaviour
 			if (lastGamepad4n5Pos != controllerInput) {
 				lastGamepad4n5Pos = controllerInput;
 				useGamepad = true;
-			}
+            }
 		} else {
 			if (lastMousePos != Input.mousePosition) {
 				lastMousePos = Input.mousePosition;

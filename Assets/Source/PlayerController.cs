@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
     public void StartKnockback() {
         isKnockedBack = true;
         Invoke("StopKnockback", 0.5f);
+        GameObject.Find("CameraWrapper").GetComponent<Shake>().DoShake(0.3f);
+        Invoke("StopKnockback", 0.5f);
     }
 
     private void Update() {
@@ -87,8 +89,8 @@ public class PlayerController : MonoBehaviour
                 curForce = rollForce;
                 jumpForce = rollJumpForce;
 
-                Camera.main.GetComponent<AudioSource>().volume = 1.0f;
-                GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.0f;
+                //Camera.main.GetComponent<AudioSource>().volume = 1.0f;
+                //GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.0f;
             }
             else {
                 // dont roll
@@ -103,9 +105,14 @@ public class PlayerController : MonoBehaviour
                 curForce = moveForce;
                 jumpForce = walkJumpForce;
 
-                Camera.main.GetComponent<AudioSource>().volume = 0.0f;
-                GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 1.0f;
+                //Camera.main.GetComponent<AudioSource>().volume = 0.0f;
+                //GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 1.0f;
             }
+        }
+
+        if (isRolling) {
+            //Camera.main.GetComponent<Shake>().DoShake(0.01f);
+            GameObject.Find("CameraWrapper").GetComponent<Shake>().DoShake(0.1f);
         }
     }
 

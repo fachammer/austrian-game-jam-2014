@@ -88,18 +88,18 @@ public class Woman : MonoBehaviour
 
     private void Attack()
     {
-        Vector3 targetPos = player.transform.position;
-        if (targetPos.x < transform.position.x)
-        {
-            moveDir = -1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        if (player != null && player.gameObject.activeSelf) {
+            Vector3 targetPos = player.transform.position;
+            if (targetPos.x < transform.position.x) {
+                moveDir = -1;
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            }
+            else {
+                moveDir = 1;
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            }
+            TryHitPlayer();
         }
-        else
-        {
-            moveDir = 1;
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-        TryHitPlayer();
     }
 
     private void TryHitPlayer()
@@ -156,14 +156,14 @@ public class Woman : MonoBehaviour
     }
     private void CheckDispose()
     {
-        if (transform.position.x < player.transform.position.x)
-        {
-            float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
+        if (player != null && player.gameObject.activeSelf) {
+            if (transform.position.x < player.transform.position.x) {
+                float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
 
-            if (sqrDist >= 250000)
-            {
-                Destroy(gameObject);
-                //gameObject.SetActive(false);
+                if (sqrDist >= 250000) {
+                    Destroy(gameObject);
+                    //gameObject.SetActive(false);
+                }
             }
         }
     }

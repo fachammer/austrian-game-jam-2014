@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
     private void Start() {
         Destroy(gameObject, timeToLive);
         rigidbody2D.velocity = new Vector2(velocity, 0f);
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {

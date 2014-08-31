@@ -20,6 +20,11 @@ public class BossBehaviour : MonoBehaviour
 
     private void Start() {
         playerTransform = GameObject.Find("Player").transform;
+        GetComponent<Health>().OnDeath += new Health.HealthHandler(BossBehaviour_OnDeath);
+    }
+
+    void BossBehaviour_OnDeath() {
+        Application.LoadLevel("menu");
     }
 
     private void Update() {
@@ -55,8 +60,8 @@ public class BossBehaviour : MonoBehaviour
     }
 
     private bool IsFacingAwayFromPlayer() {
-        return playerTransform.position.x >= transform.position.x && transform.localScale.x < 0 ||
-                playerTransform.position.x < transform.position.x && transform.localScale.x > 0;
+        return playerTransform.position.x >= transform.position.x && transform.localScale.x > 0 ||
+                playerTransform.position.x < transform.position.x && transform.localScale.x < 0;
     }
 
     private void Flip() {
@@ -69,7 +74,8 @@ public class BossBehaviour : MonoBehaviour
     }
 
     private void DoJumping() {
-        if (!IsJumping()) {
+        //if (!IsJumping()) 
+        {
             jumpCheckTimer += Time.deltaTime;
 
             if (jumpCheckTimer >= jumpCheckInterval) {
@@ -82,7 +88,7 @@ public class BossBehaviour : MonoBehaviour
     }
 
     private bool IsJumping() {
-        return Physics2D.Raycast(transform.position, -Vector2.up * 2.8f, 2, LayerMask.GetMask("Ground")).collider != null;
+        return Physics2D.Raycast(transform.position, -Vector2.up * 6.0f, 2, LayerMask.GetMask("Ground")).collider != null;
     }
 
     private bool ShouldJump() {
