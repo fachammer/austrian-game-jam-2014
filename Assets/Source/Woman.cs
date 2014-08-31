@@ -9,6 +9,8 @@ public class Woman : MonoBehaviour
     public float evasionClearDistance;
     public float jumpCastLength = 1f;
 
+    public SpriteRenderer bloodSplatter;
+
     public GameObject package;
 
     public AudioClip[] screams;
@@ -39,6 +41,7 @@ public class Woman : MonoBehaviour
     void Woman_OnDeath() {
         Scream();
         BloodEffects.Instance.Stimulate();
+        Instantiate(bloodSplatter, transform.position + new Vector3(0, 1, 0), Random.rotation * new Quaternion(0, 1, 1, 1));
         renderer.enabled = false;
         collider2D.enabled = false;
         Invoke("Deactivate", 2);
@@ -90,7 +93,9 @@ public class Woman : MonoBehaviour
         if (Mathf.Abs(player.transform.position.x - transform.position.x) <= grabDistance &&
             Mathf.Abs(player.transform.position.y - transform.position.y) <= grabDistance)
         {
-            if (player.isRolling) {
+            if (player.isRolling)
+            {
+                Instantiate(bloodSplatter, transform.position + new Vector3(0, 1, 0), Random.rotation * new Quaternion(0, 1, 1, 1));
                 ThrowAway();
             }
             else {
