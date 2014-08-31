@@ -1,23 +1,28 @@
 fileFormatVersion: 2
-guid: 5ffa197bbb25141479d01561e2e344d1
+guid: d69959ae427b5a24f8aafea03d1bca4f
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Woman_run 1
-    21300002: Woman_run
-    21300004: Woman_run_0
-    21300006: Woman_run_1
-    21300008: Woman_run_2
-    21300010: Woman_run_3
-    21300012: Woman_run_4
-    21300014: Woman_run_5
-    21300016: Woman_run_6
-    21300018: Woman_run_7
-    21300020: Woman_run_8
-    21300022: Woman_run_9
-    21300024: Woman_run_10
-    21300026: Woman_run_11
-    21300028: Woman_run_12
-    21300030: Woman_run_13
+    21300000: swiss
+    21300002: swiss_0
+    21300004: swiss_1
+    21300006: swiss_2
+    21300008: swiss_3
+    21300010: swiss_4
+    21300012: swiss_5
+    21300014: swiss_6
+    21300016: swiss_7
+    21300018: swiss_8
+    21300020: swiss_9
+    21300022: swiss_10
+    21300024: swiss_11
+    21300026: swiss_12
+    21300028: swiss_13
+    21300030: swiss_14
+    21300032: swiss_15
+    21300034: swiss_16
+    21300036: swiss_17
+    21300038: swiss_18
+    21300040: swiss_19
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -59,7 +64,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Woman_run_0
+    - name: swiss_0
       rect:
         serializedVersion: 2
         x: 0
@@ -69,7 +74,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_1
+    - name: swiss_1
       rect:
         serializedVersion: 2
         x: 512
@@ -79,7 +84,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_2
+    - name: swiss_2
       rect:
         serializedVersion: 2
         x: 1024
@@ -89,7 +94,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_3
+    - name: swiss_3
       rect:
         serializedVersion: 2
         x: 1536
@@ -99,7 +104,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_4
+    - name: swiss_4
       rect:
         serializedVersion: 2
         x: 2048
@@ -109,7 +114,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_5
+    - name: swiss_5
       rect:
         serializedVersion: 2
         x: 2560
@@ -119,7 +124,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_6
+    - name: swiss_6
       rect:
         serializedVersion: 2
         x: 3072
@@ -129,7 +134,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_7
+    - name: swiss_7
       rect:
         serializedVersion: 2
         x: 0
@@ -139,7 +144,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_8
+    - name: swiss_8
       rect:
         serializedVersion: 2
         x: 512
@@ -149,7 +154,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_9
+    - name: swiss_9
       rect:
         serializedVersion: 2
         x: 1024
@@ -159,7 +164,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_10
+    - name: swiss_10
       rect:
         serializedVersion: 2
         x: 1536
@@ -169,7 +174,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_11
+    - name: swiss_11
       rect:
         serializedVersion: 2
         x: 2048
@@ -179,7 +184,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_12
+    - name: swiss_12
       rect:
         serializedVersion: 2
         x: 2560
@@ -189,11 +194,71 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Woman_run_13
+    - name: swiss_13
       rect:
         serializedVersion: 2
         x: 3072
         y: 1024
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: swiss_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: swiss_15
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: swiss_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: swiss_17
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: swiss_18
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: swiss_19
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 512
         width: 512
         height: 512
       alignment: 0
