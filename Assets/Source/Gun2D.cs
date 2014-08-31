@@ -12,6 +12,7 @@ public class Gun2D : MonoBehaviour
     public bool useGamepad;
     public AudioClip shoot;
     private float delay;
+
     private Vector3 lastMousePos;
     private Vector3 lastGamepad4n5Pos;
 
@@ -19,6 +20,7 @@ public class Gun2D : MonoBehaviour
         if (delay <= 0) {
             delay = 1 / fireRate;
             Fire();
+
         }
     }
 
@@ -49,6 +51,25 @@ public class Gun2D : MonoBehaviour
     }
 
     private void Update() {
+
+		Vector3 controllerInput = new Vector2 (Input.GetAxis("GamepadX"), Input.GetAxis("GamepadY"));
+
+		if (!useGamepad) {
+			if (lastGamepad4n5Pos != controllerInput) {
+				lastGamepad4n5Pos = controllerInput;
+				useGamepad = true;
+			}
+		} else {
+			if (lastMousePos != Input.mousePosition) {
+				lastMousePos = Input.mousePosition;
+				useGamepad = false;
+			}
+		}
+
+		if (controllerInput.x > 0.35 || controllerInput.x < -0.35 || controllerInput.y > 0.35 || controllerInput.y < -0.35) {
+			TryFire();
+		}
+		   
         if (delay > 0) {
             delay -= Time.deltaTime;
         }
@@ -61,7 +82,7 @@ public class Gun2D : MonoBehaviour
         }
         else {
             Vector2 difference = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-            Debug.Log(difference);
+//            Debug.Log(difference);
             angle = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
         }
 
@@ -73,9 +94,10 @@ public class Gun2D : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, angle);
             transform.FindChild("ShootPoint").localEulerAngles = new Vector3(0, 0, 0);
         }
-
+		
         if (Input.GetButton("Fire1") || Input.GetAxis("FireJoystick") < -0.1) {
             TryFire();
+			Debug.Log ("usegamepad "+useGamepad);
         }
     }
 }
