@@ -36,7 +36,6 @@ public class Gun2D : MonoBehaviour
         GetComponent<Animator>().SetTrigger("shoot");
         audio.PlayOneShot(shoot);
 
-        Debug.Log(hit.collider);
         if (hit) {
             if (hit.collider.gameObject.layer == 8) {
                 Instantiate(impact, hit.point, Quaternion.identity);
