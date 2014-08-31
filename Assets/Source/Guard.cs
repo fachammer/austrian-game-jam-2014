@@ -21,7 +21,7 @@ public class Guard : MonoBehaviour {
     float spawnX;
     public float maxDistToSpawn = 4;
 
-
+    public AudioClip sfxHit, sfxDeath;
     
 
     PlayerController player;
@@ -38,7 +38,29 @@ public class Guard : MonoBehaviour {
             Physics2D.IgnoreCollision(collider2D, c);
         }
 
+        GetComponent<Health>().OnDeath += new Health.HealthHandler(Guard_OnDeath);
+        GetComponent<Health>().OnHit += new Health.HealthHandler(Guard_OnHit);
+    }
 
+
+
+    void Guard_OnHit() {
+        audio.clip = sfxHit;
+        audio.Play();
+    }
+
+    void Guard_OnDeath() {
+        audio.clip = sfxDeath;
+        audio.Play();
+        
+            renderer.enabled = false;
+        collider2D.enabled = false;
+        Invoke("Deactivate", 2);
+    }
+
+
+    void Deactivate() {
+        Destroy(gameObject);
     }
 
 	// Use this for initialization

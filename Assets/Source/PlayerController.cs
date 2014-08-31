@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
                 curForce = rollForce;
                 jumpForce = rollJumpForce;
 
-                Camera.main.GetComponent<AudioSource>().volume = 0.2f;
+                Camera.main.GetComponent<AudioSource>().volume = 1.0f;
                 GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.0f;
             }
             else {
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
                 jumpForce = walkJumpForce;
 
                 Camera.main.GetComponent<AudioSource>().volume = 0.0f;
-                GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 0.5f;
+                GameObject.Find("CalmMusic").GetComponent<AudioSource>().volume = 1.0f;
             }
         }
     }
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
             jump = false;
         }
 
-        GetComponent<Animator>().SetInteger("directionX", (int)rigidbody2D.velocity.x);
+        // GetComponent<Animator>().SetInteger("directionX", (int)rigidbody2D.velocity.x);
     }
 
     private void Flip() {
