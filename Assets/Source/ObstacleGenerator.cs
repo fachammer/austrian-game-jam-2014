@@ -14,12 +14,12 @@ public class ObstacleGenerator : MonoBehaviour {
     {
         xPosUsed = new List<int>();
         end = transform.parent.FindChild("END");
-        int count = Random.Range(1, 5);
+        int count = Random.Range(1, 4);
 
         for (int i = 0; i < count; i++)
         {
             do {
-                xPos = Random.Range(0, (int)(end.transform.position.x));
+                xPos = Random.Range((int)transform.parent.transform.position.x, (int)(end.transform.position.x));
             } while (xPosUsed.Contains(xPos));
 
             xPosUsed.Add(xPos);
