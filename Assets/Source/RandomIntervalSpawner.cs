@@ -5,6 +5,7 @@ public class RandomIntervalSpawner : MonoBehaviour
     public GameObject objectToSpawn;
     public float minSpawnInterval;
     public float maxSpawnInterval;
+    public int maxWomenSpawn = 3;
 
     public Sprite spriteOpened;
     public AudioClip sfxOpen;
@@ -12,6 +13,8 @@ public class RandomIntervalSpawner : MonoBehaviour
 
     private float currentInterval;
     private float timer;
+    private bool playerTooClose;
+    private int womenCounter = 0;
 
     private static float CalculateNewInterval(float minInterval, float maxInterval) {
         return Random.Range(minInterval, maxInterval);
@@ -24,14 +27,30 @@ public class RandomIntervalSpawner : MonoBehaviour
     private void Update() {
         timer += Time.deltaTime;
 
-        if (timer >= currentInterval) {
+        if (timer >= currentInterval && womenCounter < maxWomenSpawn)
+        {
             timer = 0f;
             currentInterval = CalculateNewInterval(minSpawnInterval, maxSpawnInterval);
-            Instantiate(objectToSpawn, transform.position + new Vector3(0f, 1.25f, 0f), transform.rotation);
 
-            if (isClosed) {
-                Open();
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3);
+            playerTooClose = false;
+            foreach(Collider2D c in colliders){
+                if(c.gameObject.name == "Player"){
+                    playerTooClose = true;
+                }
             }
+
+            if(!playerTooClose){
+                Instantiate(objectToSpawn, transform.position + new Vector3(0f, 1.25f, 0f), transform.rotation);
+                womenCounter++;
+                
+                if (isClosed)
+                {
+                    Open();
+                }
+            }
+
+            
 
         }
     }
