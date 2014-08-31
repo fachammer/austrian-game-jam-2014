@@ -103,6 +103,7 @@ public class Woman : MonoBehaviour
     public void ThrowAway()
     {
         rigidbody2D.fixedAngle = false;
+        rigidbody2D.angularDrag = 0;
         GetComponent<BoxCollider2D>().enabled = false;
         if (moveDir >= 0)
         {
