@@ -26,6 +26,7 @@ public class Woman : MonoBehaviour
 
     //private GameObject player;
     PlayerController player;
+    bool dead = false;
 
     private void Awake() {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -45,6 +46,7 @@ public class Woman : MonoBehaviour
         renderer.enabled = false;
         collider2D.enabled = false;
         Invoke("Deactivate", 2);
+        dead = true;
     }
 
     void Deactivate() {
@@ -57,19 +59,20 @@ public class Woman : MonoBehaviour
 
     private void Update()
     {
-        if (!hasAttacked)
-        {
-            Attack();
-        }
-        else
-        {
-            Escape();
-        }
+        if (!dead) {
+            if (!hasAttacked) {
+                Attack();
+            }
+            else {
+                Escape();
+            }
 
-        timeSinceJump += Time.deltaTime;
-        HandleObstacles();
-        DoEvasionStuff();
-        CheckDispose();
+            timeSinceJump += Time.deltaTime;
+            HandleObstacles();
+            DoEvasionStuff();
+
+            CheckDispose();
+        }
     }
 
     private void Attack()
