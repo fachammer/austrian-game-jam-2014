@@ -5,13 +5,16 @@ using System.Collections.Generic;
 public class ObstacleGenerator : MonoBehaviour {
 
     public GameObject obstacle;
+    public int obstacleSpawnDistance = 5;
 
+    private GameObject player;
     private Transform end;
     private List<int> xPosUsed;
     private int xPos;
 
 	void Start () 
     {
+        player = GameObject.Find("Player");
         xPosUsed = new List<int>();
         end = transform.parent.FindChild("END");
         int count = Random.Range(1, 4);
@@ -20,7 +23,7 @@ public class ObstacleGenerator : MonoBehaviour {
         {
             do {
                 xPos = Random.Range((int)transform.parent.transform.position.x, (int)(end.transform.position.x));
-            } while (xPosUsed.Contains(xPos));
+            } while (xPosUsed.Contains(xPos) || (player.transform.position.x < xPos + obstacleSpawnDistance && player.transform.position.x > xPos - obstacleSpawnDistance));
 
             xPosUsed.Add(xPos);
 
