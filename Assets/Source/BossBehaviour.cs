@@ -45,7 +45,8 @@ public class BossBehaviour : MonoBehaviour
             yield return null;
         }
 
-        Jump();
+        if (!IsJumping())
+            Jump();
     }
 
     private void DoFacing() {
