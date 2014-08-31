@@ -25,7 +25,7 @@ public class Health : MonoBehaviour
             animator.SetInteger(healthAnimationParameter, CurrentHealth);
             if (CurrentHealth <= 0) {
                 if (OnDeath != null) OnDeath();
-                Destroy(gameObject, remainTimeAfterDeath);
+                //Destroy(gameObject, remainTimeAfterDeath);
             }
         }
     }

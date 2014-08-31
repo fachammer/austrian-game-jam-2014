@@ -39,6 +39,13 @@ public class Woman : MonoBehaviour
     void Woman_OnDeath() {
         Scream();
         BloodEffects.Instance.Stimulate();
+        renderer.enabled = false;
+        collider2D.enabled = false;
+        Invoke("Deactivate", 2);
+    }
+
+    void Deactivate() {
+        Destroy(gameObject);
     }
 
     private void Start() { 
@@ -105,11 +112,12 @@ public class Woman : MonoBehaviour
         {
             rigidbody2D.AddForce(new Vector2(Random.Range(500, 1000), Random.Range(1500, 4000)));
         }
-        rigidbody2D.AddTorque(50);
+        rigidbody2D.AddTorque(Random.Range(-500,500));
         DestroyThisTimed dtt = gameObject.AddComponent<DestroyThisTimed>();
         dtt.time = 5;
         GetComponent<Health>().enabled = false;
         this.enabled = false;
+        Scream();
     }
 
     private void TakePackage()
@@ -132,6 +140,7 @@ public class Woman : MonoBehaviour
             if (sqrDist >= 250000)
             {
                 Destroy(gameObject);
+                //gameObject.SetActive(false);
             }
         }
     }
@@ -202,8 +211,8 @@ public class Woman : MonoBehaviour
     }
 
     void Scream() {
-        //audio.clip = screams[Random.Range(0, screams.Length - 1)];
-        //audio.Play();
-        AudioSource.PlayClipAtPoint(screams[Random.Range(0, screams.Length - 1)], transform.position);
+        audio.clip = screams[Random.Range(0, screams.Length - 1)];
+        audio.Play();
+        //AudioSource.PlayClipAtPoint(screams[Random.Range(0, screams.Length - 1)], transform.position);
     }
 }
