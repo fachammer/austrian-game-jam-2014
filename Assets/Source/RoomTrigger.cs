@@ -13,7 +13,7 @@ public class RoomTrigger : MonoBehaviour {
     }
     void Update()
     {
-        if (player.transform.position.x >= transform.position.x - 0.5f)
+        if (player.transform.position.x >= transform.position.x - 0.2f)
         {
             if (Random.Range(0, 5) == 0)
             {
