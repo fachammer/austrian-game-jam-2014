@@ -54,9 +54,7 @@ public class RandomIntervalSpawner : MonoBehaviour
                         Open();
                     }
                 }
-            }
-
-            
+            }           
 
         }
     }
