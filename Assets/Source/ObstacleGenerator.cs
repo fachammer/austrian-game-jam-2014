@@ -14,9 +14,7 @@ public class ObstacleGenerator : MonoBehaviour {
     {
         xPosUsed = new List<int>();
         end = transform.parent.FindChild("END");
-        int count = Random.Range(1, 6);
-        // debug
-        count = 0;
+        int count = Random.Range(1, 5);
 
         for (int i = 0; i < count; i++)
         {

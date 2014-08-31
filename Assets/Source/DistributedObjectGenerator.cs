@@ -21,7 +21,6 @@ public class DistributedObjectGenerator : MonoBehaviour
     }
 
     private void Start() {
-        Debug.Log("start generator");
         Vector2[] positions = new Vector2[numberOfDoors];
         Vector3 position = transform.position;
         Vector2 basePosition = new Vector2(position.x, position.y - 1.0f);
