@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Woman : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class Woman : MonoBehaviour
     private float timeSinceJump = 0;
     private Collider2D colliders;
 
+    private Text killCount;
+    private int counter;
+
     //private GameObject player;
     PlayerController player;
     bool dead = false;
@@ -42,7 +46,12 @@ public class Woman : MonoBehaviour
     void Woman_OnDeath() {
         Scream();
         BloodEffects.Instance.Stimulate();
+        
         Instantiate(bloodSplatter, transform.position + new Vector3(0, 1, 0), Random.rotation * new Quaternion(0, 1, 1, 1));
+        counter = int.Parse(killCount.text);
+        counter++;
+        killCount.text = counter.ToString();
+
         renderer.enabled = false;
         collider2D.enabled = false;
         Invoke("Deactivate", 2);
@@ -55,6 +64,8 @@ public class Woman : MonoBehaviour
 
     private void Start() { 
         timeTillRndJump = Random.Range(0.5f, 3.0f);
+
+        killCount = GameObject.Find("KillCount").GetComponent<Text>();
     }
 
     private void Update()
@@ -99,6 +110,9 @@ public class Woman : MonoBehaviour
             if (player.isRolling)
             {
                 Instantiate(bloodSplatter, transform.position + new Vector3(0, 1, 0), Random.rotation * new Quaternion(0, 1, 1, 1));
+                counter = int.Parse(killCount.text);
+                counter++;
+                killCount.text = counter.ToString();
                 ThrowAway();
             }
             else {

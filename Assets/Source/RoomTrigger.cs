@@ -13,7 +13,7 @@ public class RoomTrigger : MonoBehaviour {
     }
     void Update()
     {
-        if (player.transform.position.x >= transform.position.x - 0.5f)
+        if (player.transform.position.x >= transform.position.x - 0.2f)
         {
             GameObject newRoom = (GameObject) Instantiate(tilePrefab, transform.parent.FindChild("END").transform.position, Quaternion.identity);
             gameObject.SetActive( false );
