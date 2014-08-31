@@ -25,11 +25,6 @@ public class ObstacleGenerator : MonoBehaviour {
             xPosUsed.Add(xPos);
 
             Instantiate(obstacle, new Vector2(xPos, 1), Quaternion.identity);
-
-            if (Random.Range(0, 2) == 0)
-            {
-                Instantiate(obstacle, new Vector2(xPos, 2), Quaternion.identity);
-            }
         }
     }
 	
